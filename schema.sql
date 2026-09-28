@@ -186,3 +186,13 @@ create policy public_read_quick_links on quick_links for select to anon,authenti
 
 drop policy if exists public_read_translation_records on translation_records;
 create policy public_read_translation_records on translation_records for select to anon,authenticated using (true);
+
+
+-- Security hardening for the connected project: remove older permissive
+-- public SELECT policies so unpublished records are not exposed by accident.
+drop policy if exists "Public Read Government Updates" on government_updates;
+drop policy if exists "Public Read Jobs" on jobs;
+drop policy if exists "Public Read Scholarships" on scholarships;
+drop policy if exists "Public Read Results" on results;
+drop policy if exists "Public Read Form Fillup" on form_fill_up;
+drop policy if exists "Public Read Schemes" on schemes;
