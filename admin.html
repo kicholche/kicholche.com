@@ -1,1 +1,209 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kicholche Admin</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"><style>body{margin:0;background:#f5f8fc;font:14px Inter;color:#17365d}.wrap{max-width:1050px;margin:40px auto;padding:0 20px}.card{background:#fff;border:1px solid #dbe7f3;border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 5px 18px #153c5d12}h1{color:#061c44}button{background:#0b63ff;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer}input,select,textarea{width:100%;padding:10px;border:1px solid #cfddec;border-radius:8px;margin:6px 0 12px;box-sizing:border-box}table{width:100%;border-collapse:collapse}td,th{padding:10px;border-bottom:1px solid #e6eef6;text-align:left}.danger{background:#ef3340}.muted{color:#7187a0}</style></head><body><div class="wrap"><div class="card"><h1>Kicholche Admin</h1><p class="muted">Secure Supabase-authenticated content management foundation.</p><div id="auth"><input id="email" type="email" placeholder="Admin email"><input id="password" type="password" placeholder="Password"><button id="login">Sign in</button></div><div id="session" hidden><button id="logout" class="danger">Sign out</button></div></div><div id="dashboard" hidden><div class="card"><h2>Content overview</h2><table><thead><tr><th>Section</th><th>Rows</th></tr></thead><tbody id="counts"></tbody></table></div><div class="card"><h2>Homepage controls</h2><p class="muted">Use Supabase Table Editor or the production admin CRUD modules to publish content. The public site reads only approved/published records.</p><a href="./" style="color:#0b63ff">← Back to website</a></div></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script>const sb=window.supabase.createClient(KICHOLOCHE_CONFIG.SUPABASE_URL,KICHOLOCHE_CONFIG.SUPABASE_ANON_KEY);const auth=document.querySelector('#auth'),session=document.querySelector('#session'),dash=document.querySelector('#dashboard');document.querySelector('#login').onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:email.value,password:password.value});if(error)alert(error.message);else location.reload()};document.querySelector('#logout').onclick=async()=>{await sb.auth.signOut();location.reload()};(async()=>{const{data}=await sb.auth.getSession();if(!data.session)return;auth.hidden=true;session.hidden=false;dash.hidden=false;const tables=['government_updates','jobs','scholarships','results','form_fill_up','schemes','lottery_results','ai_tools','breaking_news'];document.querySelector('#counts').innerHTML=(await Promise.all(tables.map(async t=>{const{count}=await sb.from(t).select('*',{count:'exact',head:true});return '<tr><td>'+t+'</td><td>'+(count??0)+'</td></tr>'}))).join('')})()</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kicholche Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#061c44;--blue:#0b63ff;--ink:#17365d;--muted:#7187a0;--line:#dbe7f3;--bg:#f4f8fc;--danger:#d92d3a;--ok:#138a55}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px Inter,system-ui,sans-serif}.wrap{max-width:1240px;margin:0 auto;padding:28px 18px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.brand h1{margin:0;color:var(--navy);font-size:28px}.brand p{margin:5px 0 0;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 5px 18px #153c5d0d}
+button,.button{border:0;border-radius:9px;padding:10px 14px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px}.button.secondary,button.secondary{background:#edf4ff;color:#0b4ebc}.danger{background:var(--danger)!important}.ghost{background:#eef3f8!important;color:var(--ink)!important}.success{background:var(--ok)!important}
+input,select,textarea{width:100%;padding:10px 11px;border:1px solid #cfddec;border-radius:8px;margin:6px 0 12px;font:inherit;color:var(--ink);background:#fff}textarea{min-height:100px;resize:vertical}
+label{font-weight:700;font-size:12px;color:#365474}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.full{grid-column:1/-1}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.toolbar select{width:auto;min-width:230px;margin:0}.toolbar input{flex:1;min-width:220px;margin:0}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.tab{background:#edf4ff;color:#174f9b}.tab.active{background:var(--blue);color:#fff}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:720px}th,td{padding:10px;border-bottom:1px solid #e6eef6;text-align:left;vertical-align:top}th{background:#f8fbfe;color:#4d6680;font-size:12px;text-transform:uppercase;letter-spacing:.04em}td.actions{white-space:nowrap}.actions button{padding:7px 9px;margin-right:5px;font-size:12px}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef3f8;font-size:11px;font-weight:700}.badge.on{background:#e5f7ee;color:#117044}.badge.off{background:#fdebed;color:#a51e2b}
+.modal{position:fixed;inset:0;background:#061c4470;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.open{display:flex}.modal-card{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:16px;padding:22px}.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.modal-head h2{margin:0 0 12px;color:var(--navy)}
+.notice{padding:11px 13px;border-radius:9px;background:#edf4ff;color:#1d4f91;margin:10px 0}.error{background:#fdebed;color:#9d2430}.hidden{display:none!important}.muted{color:var(--muted)}.empty{padding:24px;text-align:center;color:var(--muted)}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.wrap{padding:18px 12px 40px}.toolbar select{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><h1>Kicholche Admin</h1><p>Supabase-powered content management</p></div>
+    <div id="sessionActions" class="hidden"><button id="logout" class="danger">Sign out</button></div>
+  </div>
+
+  <section id="authCard" class="card">
+    <h2>Admin sign in</h2>
+    <p class="muted">Only users registered in the Supabase <code>admin_users</code> table can manage content.</p>
+    <div class="grid">
+      <div><label for="email">Email</label><input id="email" type="email" autocomplete="username"></div>
+      <div><label for="password">Password</label><input id="password" type="password" autocomplete="current-password"></div>
+    </div>
+    <button id="login">Sign in</button>
+    <div id="authMessage"></div>
+  </section>
+
+  <main id="dashboard" class="hidden">
+    <section class="card">
+      <div class="toolbar">
+        <select id="sectionSelect"></select>
+        <input id="filter" placeholder="Filter records...">
+        <button id="newRecord">+ New record</button>
+        <a class="button secondary" href="./">View website</a>
+      </div>
+      <div id="overview" class="tabs"></div>
+      <div id="tableStatus" class="muted"></div>
+      <div class="table-wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    </section>
+  </main>
+</div>
+
+<div id="editorModal" class="modal">
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="editorTitle">New record</h2><button id="closeEditor" class="ghost">Close</button></div>
+    <form id="editorForm"><div id="fields" class="grid"></div><div style="display:flex;gap:9px;justify-content:flex-end"><button type="button" id="cancelEditor" class="ghost">Cancel</button><button type="submit" id="saveRecord">Save</button></div></form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+const sb=window.supabase.createClient(KICHOLOCHE_CONFIG.SUPABASE_URL,KICHOLOCHE_CONFIG.SUPABASE_ANON_KEY);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const schema={
+ government_updates:{label:"Government Updates",order:"created_at",fields:[
+  ["title","Title","text",1],["slug","Slug","text"],["summary","Summary","textarea",1],["content","Content","textarea",1],["image_url","Image URL","url"],["official_link","Official Link","url"],["language","Language","select",0,["bn","hi","en"]],["is_published","Published","checkbox"],["is_pinned","Pinned","checkbox"]
+ ]},
+ jobs:{label:"Jobs",order:"created_at",fields:[
+  ["title","Title","text",1],["company","Company","text"],["location","Location","text"],["description","Description","textarea",1],["apply_url","Apply URL","url"],["status","Status","select",0,["draft","published","closed"]]
+ ]},
+ scholarships:{label:"Scholarships",order:"published_on",fields:[
+  ["title","Title","text",1],["tag","Tag","text"],["published_on","Published on","date"],["url","Official URL","url"],["is_published","Published","checkbox"]
+ ]},
+ results:{label:"Results",order:"published_on",fields:[
+  ["title","Title","text",1],["tag","Tag","text"],["published_on","Published on","date"],["url","Result URL","url"],["is_published","Published","checkbox"]
+ ]},
+ form_fill_up:{label:"Form Fill-up",order:"deadline",fields:[
+  ["title","Title","text",1],["deadline","Deadline","date"],["apply_link","Apply Link","url"],["status","Status","select",0,["Running","Upcoming","Expired"]],["language","Language","select",0,["bn","hi","en"]]
+ ]},
+ schemes:{label:"Schemes",order:"created_at",fields:[
+  ["title","Title","text",1],["slug","Slug","text"],["description","Description","textarea",1],["eligibility","Eligibility","textarea"],["benefits","Benefits","textarea"],["documents","Documents","textarea"],["how_to_apply","How to apply","textarea"],["official_url","Official URL","url"],["image_url","Image URL","url"],["status","Status","select",0,["draft","published","archived"]]
+ ]},
+ lottery_results:{label:"Lottery Results",order:"result_date",fields:[
+  ["lottery_name","Lottery name","text",1],["result_date","Result date","date"],["result_number","Result number","text"],["result_text","Result text","textarea"],["image_url","Image URL","url"],["pdf_url","PDF URL","url"],["official_url","Official URL","url"],["status","Status","select",0,["draft","published","archived"]]
+ ]},
+ ai_tools:{label:"AI Tools",order:"sort_order",fields:[
+  ["name","Name","text",1],["slug","Slug","text"],["description","Description","textarea",1],["icon","Font Awesome icon","text"],["route","Route / URL","text"],["active","Active","checkbox"],["sort_order","Sort order","number"]
+ ]},
+ breaking_news:{label:"Breaking News",order:"priority",fields:[
+  ["title","Title","text",1],["url","URL","url"],["active","Active","checkbox"],["priority","Priority","number"],["starts_at","Starts at","datetime-local"],["ends_at","Ends at","datetime-local"]
+ ]},
+ quick_links:{label:"Quick Links",order:"sort_order",fields:[
+  ["title","Title","text",1],["url","URL","url",1],["sort_order","Sort order","number"],["is_published","Published","checkbox"]
+ ]}
+};
+let currentTable="government_updates", editingId=null, cache=[];
+
+function fieldHTML(f,row={}){
+  const [key,label,type,full,opts]=f, value=row[key]??"";
+  const cls=full?"full":"";
+  if(type==="checkbox") return '<div class="'+cls+'"><label><input data-key="'+key+'" type="checkbox" '+(value?"checked":"")+' style="width:auto;margin-right:8px">'+label+'</label></div>';
+  if(type==="select") return '<div class="'+cls+'"><label>'+label+'</label><select data-key="'+key+'">'+opts.map(o=>'<option value="'+esc(o)+'" '+(String(value)===o?"selected":"")+'>'+esc(o)+'</option>').join("")+'</select></div>';
+  return '<div class="'+cls+'"><label>'+label+'</label><'+(type==="textarea"?"textarea":"input")+' data-key="'+key+'" type="'+(type==="textarea"?"":type)+'" value="'+(type==="textarea"?"":esc(value))+'">'+(type==="textarea"?esc(value):"")+'</'+(type==="textarea"?"textarea":"input")+'></div>';
+}
+function openEditor(row={}){
+  editingId=row.id||null;
+  const def=schema[currentTable];
+  $("#editorTitle").textContent=(editingId?"Edit ":"New ")+def.label;
+  $("#fields").innerHTML=def.fields.map(f=>fieldHTML(f,row)).join("");
+  $("#editorModal").classList.add("open");
+}
+function closeEditor(){ $("#editorModal").classList.remove("open"); editingId=null; }
+function valuesFromForm(){
+  const out={};
+  schema[currentTable].fields.forEach(([key,,type])=>{
+    const el=document.querySelector('[data-key="'+key+'"]');
+    if(type==="checkbox") out[key]=el.checked;
+    else if(type==="number") out[key]=el.value===""?null:Number(el.value);
+    else out[key]=el.value===""?null:el.value;
+  });
+  return out;
+}
+async function loadTable(){
+  const def=schema[currentTable];
+  $("#tableStatus").textContent="Loading "+def.label+"...";
+  const {data,error}=await sb.from(currentTable).select("*").order(def.order,{ascending:false}).limit(100);
+  if(error){$("#tableStatus").innerHTML='<span class="error notice">'+esc(error.message)+'</span>';cache=[];renderTable();return;}
+  cache=data||[]; renderTable();
+}
+function renderTable(){
+  const def=schema[currentTable], q=$("#filter").value.trim().toLowerCase();
+  const rows=cache.filter(r=>!q||JSON.stringify(r).toLowerCase().includes(q));
+  $("#tableStatus").textContent=rows.length+" record(s) shown";
+  $("#thead").innerHTML="<tr>"+def.fields.slice(0,5).map(f=>"<th>"+esc(f[1])+"</th>").join("")+"<th>Actions</th></tr>";
+  $("#tbody").innerHTML=rows.length?rows.map(r=>{
+    const cells=def.fields.slice(0,5).map(([k])=>{let v=r[k];if(typeof v==="boolean")v=v?"Yes":"No";if(v&&String(v).length>80)v=String(v).slice(0,80)+"…";return "<td>"+esc(v??"")+"</td>"}).join("");
+    return "<tr>"+cells+'<td class="actions"><button class="secondary" data-edit="'+esc(r.id)+'">Edit</button><button class="danger" data-delete="'+esc(r.id)+'">Delete</button></td></tr>';
+  }).join(""):'<tr><td colspan="6" class="empty">No records yet.</td></tr>';
+}
+async function saveRecord(e){
+  e.preventDefault();
+  const payload=valuesFromForm();
+  if(currentTable==="government_updates"&&!payload.title){alert("Title is required.");return;}
+  if(currentTable==="jobs"&&!payload.title){alert("Title is required.");return;}
+  if(currentTable==="scholarships"&&!payload.title){alert("Title is required.");return;}
+  if(currentTable==="results"&&!payload.title){alert("Title is required.");return;}
+  if(currentTable==="form_fill_up"&&!payload.title){alert("Title is required.");return;}
+  if(currentTable==="schemes"&&!payload.title){alert("Title is required.");return;}
+  if(currentTable==="lottery_results"&&!payload.lottery_name){alert("Lottery name is required.");return;}
+  if(currentTable==="ai_tools"&&!payload.name){alert("Name is required.");return;}
+  if(currentTable==="breaking_news"&&!payload.title){alert("Title is required.");return;}
+  if(currentTable==="quick_links"&&!payload.title){alert("Title is required.");return;}
+  const btn=$("#saveRecord");btn.disabled=true;btn.textContent="Saving...";
+  let result;
+  if(editingId) result=await sb.from(currentTable).update(payload).eq("id",editingId);
+  else result=await sb.from(currentTable).insert(payload);
+  btn.disabled=false;btn.textContent="Save";
+  if(result.error){alert(result.error.message);return;}
+  closeEditor();await loadTable();
+}
+async function deleteRecord(id){
+  if(!confirm("Delete this record permanently?"))return;
+  const {error}=await sb.from(currentTable).delete().eq("id",id);
+  if(error)alert(error.message);else await loadTable();
+}
+function populateSections(){
+  $("#sectionSelect").innerHTML=Object.entries(schema).map(([k,v])=>'<option value="'+k+'">'+esc(v.label)+'</option>').join("");
+  $("#overview").innerHTML=Object.entries(schema).map(([k,v])=>'<button class="tab '+(k===currentTable?"active":"")+'" data-tab="'+k+'">'+esc(v.label)+'</button>').join("");
+  $("#sectionSelect").value=currentTable;
+}
+async function boot(){
+  const {data}=await sb.auth.getSession();
+  if(!data.session)return;
+  const {data:adminRow,error}=await sb.from("admin_users").select("user_id").eq("user_id",data.session.user.id).maybeSingle();
+  if(error||!adminRow){$("#authMessage").innerHTML='<div class="notice error">This account is signed in but is not an approved admin.</div>';return;}
+  $("#authCard").classList.add("hidden");$("#sessionActions").classList.remove("hidden");$("#dashboard").classList.remove("hidden");
+  populateSections();await loadTable();
+}
+$("#login").onclick=async()=>{
+  const email=$("#email").value.trim(),password=$("#password").value;
+  if(!email||!password){$("#authMessage").innerHTML='<div class="notice error">Email and password are required.</div>';return;}
+  const {error}=await sb.auth.signInWithPassword({email,password});
+  if(error)$("#authMessage").innerHTML='<div class="notice error">'+esc(error.message)+'</div>';else location.reload();
+};
+$("#logout").onclick=async()=>{await sb.auth.signOut();location.reload()};
+$("#sectionSelect").onchange=async e=>{currentTable=e.target.value;populateSections();await loadTable()};
+$("#filter").oninput=renderTable;
+$("#newRecord").onclick=()=>openEditor();
+$("#closeEditor").onclick=closeEditor;$("#cancelEditor").onclick=closeEditor;
+$("#editorForm").onsubmit=saveRecord;
+$("#overview").onclick=async e=>{const k=e.target.dataset.tab;if(!k)return;currentTable=k;populateSections();await loadTable()};
+$("#tbody").onclick=async e=>{
+  const edit=e.target.dataset.edit, del=e.target.dataset.delete;
+  if(edit){const row=cache.find(x=>x.id===edit);if(row)openEditor(row)}
+  if(del)await deleteRecord(del);
+};
+boot();
+</script>
+</body>
+</html>
