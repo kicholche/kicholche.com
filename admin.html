@@ -75,43 +75,87 @@ let sb=null;
 function showAuth(message,error=false){
   authMessage.innerHTML='<div class="notice'+(error?' error':'')+'">'+esc(message)+'</div>';
 }
-function loadScript(src,timeout=7000){
-  return new Promise((resolve,reject)=>{
-    const s=document.createElement("script");
-    let done=false;
-    const finish=(ok,err)=>{
-      if(done)return; done=true; clearTimeout(timer);
-      if(ok)resolve(); else {s.remove();reject(err||new Error("Script failed to load"));}
+
+function createRestClient(){
+  const cfg=window.KICHOLOCHE_CONFIG;
+  const base=String(cfg.SUPABASE_URL||"").replace(/\\/$/,"");
+  const apiKey=cfg.SUPABASE_ANON_KEY;
+  const storageKey="kicholche_admin_session";
+
+  const getSession=()=>{try{return JSON.parse(localStorage.getItem(storageKey)||"null")}catch(e){return null}};
+  const setSession=s=>{if(s)localStorage.setItem(storageKey,JSON.stringify(s));else localStorage.removeItem(storageKey)};
+
+  async function request(path,options={}){
+    const session=getSession();
+    const headers={"apikey":apiKey,"Content-Type":"application/json",...(options.headers||{})};
+    if(session?.access_token)headers.Authorization="Bearer "+session.access_token;
+    const res=await fetch(base+path,{...options,headers});
+    const text=await res.text();
+    let data=null; try{data=text?JSON.parse(text):null}catch(e){data=text}
+    if(!res.ok)return {data:null,error:{message:data?.message||data?.error_description||data?.hint||String(data||("HTTP "+res.status)),status:res.status}};
+    return {data,error:null};
+  }
+
+  function query(table){
+    let params=new URLSearchParams();
+    let method="GET", body=null, filters=[];
+    const api={
+      select(columns="*"){params.set("select",columns);return api},
+      order(column,opts={}){params.set("order",column+"."+(opts.ascending===false?"desc":"asc"));return api},
+      limit(n){params.set("limit",String(n));return api},
+      eq(column,value){filters.push([column,value]);return api},
+      maybeSingle(){api._single=true;return api},
+      insert(payload){method="POST";body=payload;return api},
+      update(payload){method="PATCH";body=payload;return api},
+      delete(){method="DELETE";return api},
+      then(resolve,reject){
+        (async()=>{
+          try{
+            const qs=new URLSearchParams(params);
+            filters.forEach(([k,v])=>qs.set(k,"eq."+String(v)));
+            if(method==="POST"||method==="PATCH")params.set("select","*");
+            const out=await request("/rest/v1/"+encodeURIComponent(table)+(qs.toString()?"?"+qs:""),{
+              method,body:body==null?undefined:JSON.stringify(body),
+              headers:method==="POST"?{"Prefer":"return=representation"}:method==="PATCH"?{"Prefer":"return=representation"}:{}
+            });
+            if(out.error)return {data:null,error:out.error};
+            let data=out.data;
+            if(api._single)data=Array.isArray(data)?(data[0]||null):data;
+            return {data,error:null};
+          }catch(e){return {data:null,error:{message:e?.message||"Request failed"}}}
+        })().then(resolve,reject);
+      }
     };
-    const timer=setTimeout(()=>finish(false,new Error("Timed out loading Supabase client")),timeout);
-    s.src=src;
-    s.onload=()=>finish(true);
-    s.onerror=()=>finish(false,new Error("Could not load "+src));
-    document.head.appendChild(s);
-  });
+    return api;
+  }
+
+  return {
+    auth:{
+      async signInWithPassword({email,password}){
+        const res=await fetch(base+"/auth/v1/token?grant_type=password",{
+          method:"POST",
+          headers:{"apikey":apiKey,"Content-Type":"application/json"},
+          body:JSON.stringify({email,password})
+        });
+        const data=await res.json().catch(()=>null);
+        if(!res.ok)return {data:null,error:{message:data?.msg||data?.error_description||data?.message||"Invalid login credentials."}};
+        setSession(data); return {data,error:null};
+      },
+      async getSession(){return {data:{session:getSession()},error:null}},
+      async signOut(){setSession(null);return {error:null}}
+    },
+    from:query
+  };
 }
+
 async function ensureSupabase(){
   if(sb)return sb;
   if(!window.KICHOLOCHE_CONFIG?.SUPABASE_URL||!window.KICHOLOCHE_CONFIG?.SUPABASE_ANON_KEY)
     throw new Error("Supabase configuration is missing.");
-  if(!window.supabase?.createClient){
-    showAuth("Connecting to Supabase...");
-    const cdns=[
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
-      "https://unpkg.com/@supabase/supabase-js@2"
-    ];
-    let loaded=false;
-    for(const src of cdns){
-      try{await loadScript(src);if(window.supabase?.createClient){loaded=true;break;}}catch(e){}
-    }
-    if(!loaded)throw new Error("Supabase client could not load. Please check your internet connection or CDN blocking.");
-  }
-  sb=window.supabase.createClient(KICHOLOCHE_CONFIG.SUPABASE_URL,KICHOLOCHE_CONFIG.SUPABASE_ANON_KEY);
+  sb=createRestClient();
   return sb;
 }
 
-
-const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 const schema={
  government_updates:{label:"Government Updates",order:"created_at",fields:[
   ["title","Title","text",1],["slug","Slug","text"],["summary","Summary","textarea",1],["content","Content","textarea",1],["image_url","Image URL","url"],["official_link","Official Link","url"],["language","Language","select",0,["bn","hi","en"]],["is_published","Published","checkbox"],["is_pinned","Pinned","checkbox"]
