@@ -66,29 +66,52 @@ label{font-weight:700;font-size:12px;color:#365474}.grid{display:grid;grid-templ
   </div>
 </div>
 
-<script>
-(function(){
-  function loadFallback(){
-    if(window.supabase?.createClient)return;
-    var s=document.createElement("script");
-    s.src="https://unpkg.com/@supabase/supabase-js@2";
-    s.onload=function(){window.dispatchEvent(new Event("supabase-ready"));};
-    s.onerror=function(){var m=document.querySelector("#authMessage");if(m)m.innerHTML='<div class="notice error">Supabase client could not load. Please check your internet connection, browser extensions, or CDN blocking.</div>';};
-    document.head.appendChild(s);
-  }
-  window.addEventListener("load",function(){if(!window.supabase?.createClient)loadFallback();});
-})();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 const authMessage=$("#authMessage");
-if(!window.supabase?.createClient){
-  authMessage.innerHTML='<div class="notice error">Supabase client failed to load. Refresh the page or check your internet/CDN connection.</div>';
-  throw new Error("Supabase client failed to load");
+let sb=null;
+
+function showAuth(message,error=false){
+  authMessage.innerHTML='<div class="notice'+(error?' error':'')+'">'+esc(message)+'</div>';
 }
-const sb=window.supabase.createClient(KICHOLOCHE_CONFIG.SUPABASE_URL,KICHOLOCHE_CONFIG.SUPABASE_ANON_KEY);
+function loadScript(src,timeout=7000){
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement("script");
+    let done=false;
+    const finish=(ok,err)=>{
+      if(done)return; done=true; clearTimeout(timer);
+      if(ok)resolve(); else {s.remove();reject(err||new Error("Script failed to load"));}
+    };
+    const timer=setTimeout(()=>finish(false,new Error("Timed out loading Supabase client")),timeout);
+    s.src=src;
+    s.onload=()=>finish(true);
+    s.onerror=()=>finish(false,new Error("Could not load "+src));
+    document.head.appendChild(s);
+  });
+}
+async function ensureSupabase(){
+  if(sb)return sb;
+  if(!window.KICHOLOCHE_CONFIG?.SUPABASE_URL||!window.KICHOLOCHE_CONFIG?.SUPABASE_ANON_KEY)
+    throw new Error("Supabase configuration is missing.");
+  if(!window.supabase?.createClient){
+    showAuth("Connecting to Supabase...");
+    const cdns=[
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
+      "https://unpkg.com/@supabase/supabase-js@2"
+    ];
+    let loaded=false;
+    for(const src of cdns){
+      try{await loadScript(src);if(window.supabase?.createClient){loaded=true;break;}}catch(e){}
+    }
+    if(!loaded)throw new Error("Supabase client could not load. Please check your internet connection or CDN blocking.");
+  }
+  sb=window.supabase.createClient(KICHOLOCHE_CONFIG.SUPABASE_URL,KICHOLOCHE_CONFIG.SUPABASE_ANON_KEY);
+  return sb;
+}
+
+<script>
+
 const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 const schema={
  government_updates:{label:"Government Updates",order:"created_at",fields:[
@@ -150,6 +173,7 @@ function valuesFromForm(){
   return out;
 }
 async function loadTable(){
+  await ensureSupabase();
   const def=schema[currentTable];
   $("#tableStatus").textContent="Loading "+def.label+"...";
   const {data,error}=await sb.from(currentTable).select("*").order(def.order,{ascending:false}).limit(100);
@@ -168,6 +192,7 @@ function renderTable(){
 }
 async function saveRecord(e){
   e.preventDefault();
+  await ensureSupabase();
   const payload=valuesFromForm();
   if(currentTable==="government_updates"&&!payload.title){alert("Title is required.");return;}
   if(currentTable==="jobs"&&!payload.title){alert("Title is required.");return;}
@@ -189,6 +214,7 @@ async function saveRecord(e){
 }
 async function deleteRecord(id){
   if(!confirm("Delete this record permanently?"))return;
+  await ensureSupabase();
   const {error}=await sb.from(currentTable).delete().eq("id",id);
   if(error)alert(error.message);else await loadTable();
 }
@@ -198,6 +224,7 @@ function populateSections(){
   $("#sectionSelect").value=currentTable;
 }
 async function boot(){
+  try{await ensureSupabase();}catch(err){showAuth(err?.message||"Supabase connection failed.",true);return;}
   const {data}=await sb.auth.getSession();
   if(!data.session)return;
   const {data:adminRow,error}=await sb.from("admin_users").select("user_id").eq("user_id",data.session.user.id).maybeSingle();
@@ -212,6 +239,7 @@ $("#loginForm").onsubmit=async(e)=>{
   const btn=$("#login"); btn.disabled=true; btn.textContent="Signing in...";
   authMessage.innerHTML='<div class="notice">Signing in...</div>';
   try{
+    await ensureSupabase();
     const {error}=await sb.auth.signInWithPassword({email,password});
     if(error) authMessage.innerHTML='<div class="notice error">'+esc(error.message)+'</div>';
     else location.reload();
@@ -221,7 +249,7 @@ $("#loginForm").onsubmit=async(e)=>{
     btn.disabled=false; btn.textContent="Sign in";
   }
 };
-$("#logout").onclick=async()=>{await sb.auth.signOut();location.reload()};
+$("#logout").onclick=async()=>{await ensureSupabase();await sb.auth.signOut();location.reload()};
 $("#sectionSelect").onchange=async e=>{currentTable=e.target.value;populateSections();await loadTable()};
 $("#filter").oninput=renderTable;
 $("#newRecord").onclick=()=>openEditor();
