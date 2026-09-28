@@ -34,11 +34,13 @@ label{font-weight:700;font-size:12px;color:#365474}.grid{display:grid;grid-templ
   <section id="authCard" class="card">
     <h2>Admin sign in</h2>
     <p class="muted">Only users registered in the Supabase <code>admin_users</code> table can manage content.</p>
-    <div class="grid">
-      <div><label for="email">Email</label><input id="email" type="email" autocomplete="username"></div>
-      <div><label for="password">Password</label><input id="password" type="password" autocomplete="current-password"></div>
-    </div>
-    <button id="login">Sign in</button>
+    <form id="loginForm">
+      <div class="grid">
+        <div><label for="email">Email</label><input id="email" type="email" autocomplete="username"></div>
+        <div><label for="password">Password</label><input id="password" type="password" autocomplete="current-password"></div>
+      </div>
+      <button id="login" type="submit">Sign in</button>
+    </form>
     <div id="authMessage"></div>
   </section>
 
@@ -67,6 +69,11 @@ label{font-weight:700;font-size:12px;color:#365474}.grid{display:grid;grid-templ
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
+const authMessage=$("#authMessage");
+if(!window.supabase?.createClient){
+  authMessage.innerHTML='<div class="notice error">Supabase client failed to load. Refresh the page or check your internet/CDN connection.</div>';
+  throw new Error("Supabase client failed to load");
+}
 const sb=window.supabase.createClient(KICHOLOCHE_CONFIG.SUPABASE_URL,KICHOLOCHE_CONFIG.SUPABASE_ANON_KEY);
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
@@ -185,11 +192,21 @@ async function boot(){
   $("#authCard").classList.add("hidden");$("#sessionActions").classList.remove("hidden");$("#dashboard").classList.remove("hidden");
   populateSections();await loadTable();
 }
-$("#login").onclick=async()=>{
+$("#loginForm").onsubmit=async(e)=>{
+  e.preventDefault();
   const email=$("#email").value.trim(),password=$("#password").value;
-  if(!email||!password){$("#authMessage").innerHTML='<div class="notice error">Email and password are required.</div>';return;}
-  const {error}=await sb.auth.signInWithPassword({email,password});
-  if(error)$("#authMessage").innerHTML='<div class="notice error">'+esc(error.message)+'</div>';else location.reload();
+  if(!email||!password){authMessage.innerHTML='<div class="notice error">Email and password are required.</div>';return;}
+  const btn=$("#login"); btn.disabled=true; btn.textContent="Signing in...";
+  authMessage.innerHTML='<div class="notice">Signing in...</div>';
+  try{
+    const {error}=await sb.auth.signInWithPassword({email,password});
+    if(error) authMessage.innerHTML='<div class="notice error">'+esc(error.message)+'</div>';
+    else location.reload();
+  }catch(err){
+    authMessage.innerHTML='<div class="notice error">'+esc(err?.message||"Sign-in failed. Please refresh and try again.")+'</div>';
+  }finally{
+    btn.disabled=false; btn.textContent="Sign in";
+  }
 };
 $("#logout").onclick=async()=>{await sb.auth.signOut();location.reload()};
 $("#sectionSelect").onchange=async e=>{currentTable=e.target.value;populateSections();await loadTable()};
