@@ -1,313 +1,188 @@
 <!doctype html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a3a">
 <title>Kicholche Admin</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#061c44;--blue:#0b63ff;--ink:#17365d;--muted:#7187a0;--line:#dbe7f3;--bg:#f4f8fc;--danger:#d92d3a;--ok:#138a55}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px Inter,system-ui,sans-serif}.wrap{max-width:1240px;margin:0 auto;padding:28px 18px 60px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.brand h1{margin:0;color:var(--navy);font-size:28px}.brand p{margin:5px 0 0;color:var(--muted)}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 5px 18px #153c5d0d}
-button,.button{border:0;border-radius:9px;padding:10px 14px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px}.button.secondary,button.secondary{background:#edf4ff;color:#0b4ebc}.danger{background:var(--danger)!important}.ghost{background:#eef3f8!important;color:var(--ink)!important}.success{background:var(--ok)!important}
-input,select,textarea{width:100%;padding:10px 11px;border:1px solid #cfddec;border-radius:8px;margin:6px 0 12px;font:inherit;color:var(--ink);background:#fff}textarea{min-height:100px;resize:vertical}
-label{font-weight:700;font-size:12px;color:#365474}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.full{grid-column:1/-1}
-.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.toolbar select{width:auto;min-width:230px;margin:0}.toolbar input{flex:1;min-width:220px;margin:0}
-.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.tab{background:#edf4ff;color:#174f9b}.tab.active{background:var(--blue);color:#fff}
-.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:720px}th,td{padding:10px;border-bottom:1px solid #e6eef6;text-align:left;vertical-align:top}th{background:#f8fbfe;color:#4d6680;font-size:12px;text-transform:uppercase;letter-spacing:.04em}td.actions{white-space:nowrap}.actions button{padding:7px 9px;margin-right:5px;font-size:12px}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef3f8;font-size:11px;font-weight:700}.badge.on{background:#e5f7ee;color:#117044}.badge.off{background:#fdebed;color:#a51e2b}
-.modal{position:fixed;inset:0;background:#061c4470;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.open{display:flex}.modal-card{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:16px;padding:22px}.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.modal-head h2{margin:0 0 12px;color:var(--navy)}
-.notice{padding:11px 13px;border-radius:9px;background:#edf4ff;color:#1d4f91;margin:10px 0}.error{background:#fdebed;color:#9d2430}.hidden{display:none!important}.muted{color:var(--muted)}.empty{padding:24px;text-align:center;color:var(--muted)}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.wrap{padding:18px 12px 40px}.toolbar select{width:100%}}
+:root{--navy:#071a3a;--navy2:#0d2b59;--blue:#1668d9;--cyan:#eaf5ff;--bg:#f4f7fb;--card:#fff;--text:#132238;--muted:#6b7890;--line:#e2e8f0;--danger:#dc3545;--ok:#16855b;--shadow:0 12px 32px rgba(15,35,70,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Bengali",sans-serif;background:var(--bg);color:var(--text)}
+button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:none!important}
+.login{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#071a3a,#124d9b)}
+.login-card{width:min(440px,100%);background:#fff;border-radius:22px;padding:34px;box-shadow:0 24px 70px #00153b55}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;color:var(--navy)}.logo-mark{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#20b7ff,#1b55d9);color:#fff;display:grid;place-items:center;font-size:25px;font-weight:900}
+.login h1{margin:28px 0 7px;font-size:27px}.sub{color:var(--muted);margin:0 0 24px}.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 13px;outline:none;background:#fff}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1668d91c}
+.primary{background:var(--blue);color:#fff;border-radius:11px;padding:12px 17px;font-weight:750}.primary:hover{filter:brightness(.95)}.ghost{background:#eef4fb;color:#18345b;border-radius:10px;padding:10px 14px;font-weight:700}.danger{background:#fff0f1;color:#b42332;border-radius:10px;padding:9px 12px;font-weight:700}.msg{padding:11px 13px;border-radius:10px;font-size:14px;margin:12px 0}.error{background:#fff0f1;color:#a31d2d}.success{background:#eaf8f1;color:#0b6d48}.info{background:#eef6ff;color:#17549b}
+.shell{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.side{background:var(--navy);color:#dce8fb;padding:20px 14px;position:sticky;top:0;height:100vh}.side .logo{color:#fff;padding:8px 10px 24px}.side .logo-mark{width:40px;height:40px;font-size:21px}.nav{display:grid;gap:5px}.nav button{width:100%;text-align:left;background:transparent;color:#c9d7ec;padding:11px 12px;border-radius:10px}.nav button:hover,.nav button.active{background:#ffffff12;color:#fff}.nav small{display:block;color:#7f94b6;padding:17px 12px 6px;text-transform:uppercase;letter-spacing:.08em}.side-bottom{position:absolute;left:14px;right:14px;bottom:18px}.userbox{font-size:12px;color:#9db0cd;word-break:break-all;padding:10px 12px}.main{min-width:0}.top{height:74px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:5}.top h2{margin:0;font-size:20px}.top-right{display:flex;gap:10px;align-items:center}.content{padding:26px;max-width:1500px;margin:auto}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px;box-shadow:var(--shadow)}.stat .num{font-size:30px;font-weight:850;margin-top:8px}.stat .label{font-size:13px;color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}.panel-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.panel-head h3{margin:0;font-size:17px}.toolbar{display:flex;gap:9px;flex-wrap:wrap}.search{min-width:220px;border:1px solid var(--line);border-radius:10px;padding:10px 12px}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:760px}.table th,.table td{padding:12px 15px;border-bottom:1px solid #edf1f6;text-align:left;font-size:13px;vertical-align:top}.table th{background:#f8fafc;color:#63718a;font-size:12px;text-transform:uppercase}.empty{padding:38px;text-align:center;color:var(--muted)}.badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#edf5ff;color:#18569f;font-size:11px;font-weight:800}.actions{display:flex;gap:7px}.section-note{margin:0 0 16px;color:var(--muted);font-size:14px}.modal{position:fixed;inset:0;background:#081a3a66;display:grid;place-items:center;padding:20px;z-index:20}.modal-card{width:min(820px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 30px 80px #00112f55}.modal-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-body{padding:20px}.modal-foot{padding:15px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:9px}.json{width:100%;min-height:360px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;line-height:1.5}.toast{position:fixed;right:20px;bottom:20px;z-index:50;max-width:380px;padding:13px 16px;border-radius:12px;background:#102a50;color:#fff;box-shadow:0 15px 40px #00112f33}.loading{opacity:.65;pointer-events:none}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.side{position:static;height:auto;padding:10px}.side .logo{padding:6px 8px 10px}.nav{display:flex;overflow:auto}.nav small,.side-bottom{display:none}.nav button{white-space:nowrap}.top{padding:0 15px}.content{padding:15px}.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.cards{grid-template-columns:1fr}.top h2{font-size:17px}.search{min-width:160px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top">
-    <div class="brand"><h1>Kicholche Admin</h1><p>Supabase-powered content management</p></div>
-    <div id="sessionActions" class="hidden"><button id="logout" class="danger">Sign out</button></div>
-  </div>
-
-  <section id="authCard" class="card">
-    <h2>Admin sign in</h2>
-    <p class="muted">Only users registered in the Supabase <code>admin_users</code> table can manage content.</p>
+<section id="loginView" class="login">
+  <div class="login-card">
+    <div class="logo"><span class="logo-mark">K</span><span>Kicholche Admin</span></div>
+    <h1>Admin Sign in</h1>
+    <p class="sub">Kicholche-এর সব content নিরাপদে পরিচালনা করুন।</p>
+    <div id="loginMsg"></div>
     <form id="loginForm">
-      <div class="grid">
-        <div><label for="email">Email</label><input id="email" type="email" autocomplete="username"></div>
-        <div><label for="password">Password</label><input id="password" type="password" autocomplete="current-password"></div>
-      </div>
-      <button id="login" type="submit">Sign in</button>
+      <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+      <button id="loginBtn" class="primary" style="width:100%" type="submit">Sign in</button>
     </form>
-    <div id="authMessage"></div>
-  </section>
+  </div>
+</section>
 
-  <main id="dashboard" class="hidden">
-    <section class="card">
-      <div class="toolbar">
-        <select id="sectionSelect"></select>
-        <input id="filter" placeholder="Filter records...">
-        <button id="newRecord">+ New record</button>
-        <a class="button secondary" href="./">View website</a>
-      </div>
-      <div id="overview" class="tabs"></div>
-      <div id="tableStatus" class="muted"></div>
-      <div class="table-wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
-    </section>
+<section id="appView" class="shell hidden">
+  <aside class="side">
+    <div class="logo"><span class="logo-mark">K</span><span>Kicholche</span></div>
+    <div class="nav" id="nav"></div>
+    <div class="side-bottom"><div id="userEmail" class="userbox"></div><button id="logout" class="ghost" style="width:100%">Sign out</button></div>
+  </aside>
+  <main class="main">
+    <header class="top"><h2 id="pageTitle">Dashboard</h2><div class="top-right"><span id="status" class="badge">Connected</span><a href="./" class="ghost">View site</a></div></header>
+    <div id="content" class="content"></div>
   </main>
-</div>
+</section>
 
-<div id="editorModal" class="modal">
+<div id="modal" class="modal hidden">
   <div class="modal-card">
-    <div class="modal-head"><h2 id="editorTitle">New record</h2><button id="closeEditor" class="ghost">Close</button></div>
-    <form id="editorForm"><div id="fields" class="grid"></div><div style="display:flex;gap:9px;justify-content:flex-end"><button type="button" id="cancelEditor" class="ghost">Cancel</button><button type="submit" id="saveRecord">Save</button></div></form>
+    <div class="modal-head"><strong id="modalTitle">Add record</strong><button id="closeModal" class="ghost">Close</button></div>
+    <div class="modal-body">
+      <p class="section-note">JSON editor ব্যবহার করে এই section-এর সম্পূর্ণ record যোগ বা পরিবর্তন করুন।</p>
+      <textarea id="jsonEditor" class="json" spellcheck="false"></textarea>
+      <div id="modalMsg"></div>
+    </div>
+    <div class="modal-foot"><button id="cancelModal" class="ghost">Cancel</button><button id="saveBtn" class="primary">Save record</button></div>
   </div>
 </div>
+<div id="toast" class="toast hidden"></div>
 
-<script src="config.js"></script>
 <script>
+(function(){
+"use strict";
+const CONFIG=window.KICHOLOCHE_CONFIG||{SUPABASE_URL:"https://pwjybkbwxvpdlwhwosqs.supabase.co",SUPABASE_ANON_KEY:"sb_publishable_KcTjG65BQZRr1PlPkUzHew_G7RquhdB"};
 const $=s=>document.querySelector(s);
-const authMessage=$("#authMessage");
-let sb=null;
-
-function showAuth(message,error=false){
-  authMessage.innerHTML='<div class="notice'+(error?' error':'')+'">'+esc(message)+'</div>';
+const tables=[
+ ["government_updates","Government Updates"],["jobs","Jobs"],["scholarships","Scholarships"],["results","Results"],
+ ["form_fill_up","Form Fill-up"],["schemes","Schemes"],["lottery_results","Lottery Results"],["ai_tools","AI Tools"],
+ ["breaking_news","Breaking News"],["quick_links","Quick Links"]
+];
+const state={token:null,user:null,table:"government_updates",rows:[],edit:null};
+const api=(path,opt={})=>fetch(CONFIG.SUPABASE_URL+path,{...opt,headers:{"apikey":CONFIG.SUPABASE_ANON_KEY,"Content-Type":"application/json",...(state.token?{Authorization:"Bearer "+state.token}:{}) ,...(opt.headers||{})}});
+function msg(el,text,type="error"){el.innerHTML=text?'<div class="msg '+type+'">'+esc(text)+'</div>':""}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function toast(t){const x=$("#toast");x.textContent=t;x.classList.remove("hidden");setTimeout(()=>x.classList.add("hidden"),2800)}
+function saveSession(){localStorage.setItem("kicholche_admin_session",JSON.stringify({access_token:state.token,user:state.user}))}
+function clearSession(){localStorage.removeItem("kicholche_admin_session")}
+async function authLogin(email,password){
+ const r=await fetch(CONFIG.SUPABASE_URL+"/auth/v1/token?grant_type=password",{method:"POST",headers:{"apikey":CONFIG.SUPABASE_ANON_KEY,"Content-Type":"application/json"},body:JSON.stringify({email,password})});
+ const d=await r.json().catch(()=>({}));
+ if(!r.ok) throw new Error(d.error_description||d.msg||d.message||"Login failed");
+ if(!d.access_token||!d.user) throw new Error("Supabase returned an incomplete session.");
+ return d;
 }
-
-function createRestClient(){
-  const cfg=window.KICHOLOCHE_CONFIG;
-  const base=String(cfg.SUPABASE_URL||"").replace(/\\/$/,"");
-  const apiKey=cfg.SUPABASE_ANON_KEY;
-  const storageKey="kicholche_admin_session";
-
-  const getSession=()=>{try{return JSON.parse(localStorage.getItem(storageKey)||"null")}catch(e){return null}};
-  const setSession=s=>{if(s)localStorage.setItem(storageKey,JSON.stringify(s));else localStorage.removeItem(storageKey)};
-
-  async function request(path,options={}){
-    const session=getSession();
-    const headers={"apikey":apiKey,"Content-Type":"application/json",...(options.headers||{})};
-    if(session?.access_token)headers.Authorization="Bearer "+session.access_token;
-    const res=await fetch(base+path,{...options,headers,cache:"no-store"});
-    const raw=await res.text();
-    let data=null; try{data=raw?JSON.parse(raw):null}catch(e){data=raw}
-    if(!res.ok)return {data:null,error:{message:data?.message||data?.error_description||data?.hint||String(data||("HTTP "+res.status)),status:res.status}};
-    return {data,error:null};
-  }
-
-  function query(table){
-    const params=new URLSearchParams();
-    let method="GET",body=null,filters=[],single=false;
-    const api={
-      select(columns="*"){params.set("select",columns);return api},
-      order(column,opts={}){params.set("order",column+"."+(opts.ascending===false?"desc":"asc"));return api},
-      limit(n){params.set("limit",String(n));return api},
-      eq(column,value){filters.push([column,value]);return api},
-      maybeSingle(){single=true;return api},
-      insert(payload){method="POST";body=payload;return api},
-      update(payload){method="PATCH";body=payload;return api},
-      delete(){method="DELETE";return api},
-      then(resolve,reject){
-        (async()=>{
-          try{
-            const qs=new URLSearchParams(params);
-            filters.forEach(([k,v])=>qs.set(k,"eq."+String(v)));
-            if(method==="POST"||method==="PATCH")qs.set("select","*");
-            const out=await request("/rest/v1/"+encodeURIComponent(table)+(qs.toString()?"?"+qs:""),{
-              method,body:body==null?undefined:JSON.stringify(body),
-              headers:method==="POST"||method==="PATCH"?{"Prefer":"return=representation"}:{}
-            });
-            if(out.error)return {data:null,error:out.error};
-            let data=out.data;
-            if(single)data=Array.isArray(data)?(data[0]||null):data;
-            return {data,error:null};
-          }catch(e){return {data:null,error:{message:e?.message||"Request failed"}}}
-        })().then(resolve,reject);
-      }
-    };
-    return api;
-  }
-
-  return {
-    auth:{
-      async signInWithPassword({email,password}){
-        try{
-          const res=await fetch(base+"/auth/v1/token?grant_type=password",{
-            method:"POST",
-            headers:{"apikey":apiKey,"Content-Type":"application/json"},
-            body:JSON.stringify({email,password}),
-            cache:"no-store"
-          });
-          const data=await res.json().catch(()=>null);
-          if(!res.ok)return {data:null,error:{message:data?.msg||data?.error_description||data?.message||"Invalid login credentials."}};
-          setSession(data); return {data,error:null};
-        }catch(e){return {data:null,error:{message:"Could not connect to Supabase: "+(e?.message||"network error")}}}
-      },
-      async getSession(){return {data:{session:getSession()},error:null}},
-      async signOut(){setSession(null);return {error:null}}
-    },
-    from:query
-  };
+async function verifyAdmin(userId){
+ const r=await api("/rest/v1/admin_users?select=*&user_id=eq."+encodeURIComponent(userId)+"&limit=1");
+ const d=await r.json().catch(()=>[]);
+ if(!r.ok) throw new Error(d.message||"Admin permission check failed.");
+ return Array.isArray(d)&&d.length>0;
 }
-
-async function ensureSupabase(){
-  if(sb)return sb;
-  const cfg=window.KICHOLOCHE_CONFIG||{};
-  if(!cfg.SUPABASE_URL||!cfg.SUPABASE_ANON_KEY)throw new Error("Supabase configuration is missing.");
-  sb=createRestClient();
-  return sb;
+async function loadTable(table){
+ const r=await api("/rest/v1/"+encodeURIComponent(table)+"?select=*&order=created_at.desc&limit=100");
+ let d=await r.json().catch(()=>[]);
+ if(!r.ok && r.status===400){const r2=await api("/rest/v1/"+encodeURIComponent(table)+"?select=*&limit=100");d=await r2.json().catch(()=>[]);if(!r2.ok)throw new Error(d.message||"Could not load data.");}
+ else if(!r.ok) throw new Error(d.message||"Could not load data.");
+ return Array.isArray(d)?d:[];
 }
-
-const schema={
- government_updates:{label:"Government Updates",order:"created_at",fields:[
-  ["title","Title","text",1],["slug","Slug","text"],["summary","Summary","textarea",1],["content","Content","textarea",1],["image_url","Image URL","url"],["official_link","Official Link","url"],["language","Language","select",0,["bn","hi","en"]],["is_published","Published","checkbox"],["is_pinned","Pinned","checkbox"]
- ]},
- jobs:{label:"Jobs",order:"created_at",fields:[
-  ["title","Title","text",1],["company","Company","text"],["location","Location","text"],["description","Description","textarea",1],["apply_url","Apply URL","url"],["status","Status","select",0,["draft","published","closed"]]
- ]},
- scholarships:{label:"Scholarships",order:"published_on",fields:[
-  ["title","Title","text",1],["tag","Tag","text"],["published_on","Published on","date"],["url","Official URL","url"],["is_published","Published","checkbox"]
- ]},
- results:{label:"Results",order:"published_on",fields:[
-  ["title","Title","text",1],["tag","Tag","text"],["published_on","Published on","date"],["url","Result URL","url"],["is_published","Published","checkbox"]
- ]},
- form_fill_up:{label:"Form Fill-up",order:"deadline",fields:[
-  ["title","Title","text",1],["deadline","Deadline","date"],["apply_link","Apply Link","url"],["status","Status","select",0,["Running","Upcoming","Expired"]],["language","Language","select",0,["bn","hi","en"]]
- ]},
- schemes:{label:"Schemes",order:"created_at",fields:[
-  ["title","Title","text",1],["slug","Slug","text"],["description","Description","textarea",1],["eligibility","Eligibility","textarea"],["benefits","Benefits","textarea"],["documents","Documents","textarea"],["how_to_apply","How to apply","textarea"],["official_url","Official URL","url"],["image_url","Image URL","url"],["status","Status","select",0,["draft","published","archived"]]
- ]},
- lottery_results:{label:"Lottery Results",order:"result_date",fields:[
-  ["lottery_name","Lottery name","text",1],["result_date","Result date","date"],["result_number","Result number","text"],["result_text","Result text","textarea"],["image_url","Image URL","url"],["pdf_url","PDF URL","url"],["official_url","Official URL","url"],["status","Status","select",0,["draft","published","archived"]]
- ]},
- ai_tools:{label:"AI Tools",order:"sort_order",fields:[
-  ["name","Name","text",1],["slug","Slug","text"],["description","Description","textarea",1],["icon","Font Awesome icon","text"],["route","Route / URL","text"],["active","Active","checkbox"],["sort_order","Sort order","number"]
- ]},
- breaking_news:{label:"Breaking News",order:"priority",fields:[
-  ["title","Title","text",1],["url","URL","url"],["active","Active","checkbox"],["priority","Priority","number"],["starts_at","Starts at","datetime-local"],["ends_at","Ends at","datetime-local"]
- ]},
- quick_links:{label:"Quick Links",order:"sort_order",fields:[
-  ["title","Title","text",1],["url","URL","url",1],["sort_order","Sort order","number"],["is_published","Published","checkbox"]
- ]}
-};
-let currentTable="government_updates", editingId=null, cache=[];
-
-function fieldHTML(f,row={}){
-  const [key,label,type,full,opts]=f, value=row[key]??"";
-  const cls=full?"full":"";
-  if(type==="checkbox") return '<div class="'+cls+'"><label><input data-key="'+key+'" type="checkbox" '+(value?"checked":"")+' style="width:auto;margin-right:8px">'+label+'</label></div>';
-  if(type==="select") return '<div class="'+cls+'"><label>'+label+'</label><select data-key="'+key+'">'+opts.map(o=>'<option value="'+esc(o)+'" '+(String(value)===o?"selected":"")+'>'+esc(o)+'</option>').join("")+'</select></div>';
-  return '<div class="'+cls+'"><label>'+label+'</label><'+(type==="textarea"?"textarea":"input")+' data-key="'+key+'" type="'+(type==="textarea"?"":type)+'" value="'+(type==="textarea"?"":esc(value))+'">'+(type==="textarea"?esc(value):"")+'</'+(type==="textarea"?"textarea":"input")+'></div>';
+async function createRecord(table,payload){
+ const r=await api("/rest/v1/"+encodeURIComponent(table),{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify(payload)});
+ const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.message||d.hint||"Could not create record.");return d;
 }
-function openEditor(row={}){
-  editingId=row.id||null;
-  const def=schema[currentTable];
-  $("#editorTitle").textContent=(editingId?"Edit ":"New ")+def.label;
-  $("#fields").innerHTML=def.fields.map(f=>fieldHTML(f,row)).join("");
-  $("#editorModal").classList.add("open");
+async function updateRecord(table,key,value,payload){
+ const r=await api("/rest/v1/"+encodeURIComponent(table)+"?"+encodeURIComponent(key)+"=eq."+encodeURIComponent(value),{method:"PATCH",headers:{Prefer:"return=representation"},body:JSON.stringify(payload)});
+ const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.message||d.hint||"Could not update record.");return d;
 }
-function closeEditor(){ $("#editorModal").classList.remove("open"); editingId=null; }
-function valuesFromForm(){
-  const out={};
-  schema[currentTable].fields.forEach(([key,,type])=>{
-    const el=document.querySelector('[data-key="'+key+'"]');
-    if(type==="checkbox") out[key]=el.checked;
-    else if(type==="number") out[key]=el.value===""?null:Number(el.value);
-    else out[key]=el.value===""?null:el.value;
-  });
-  return out;
+async function deleteRecord(table,key,value){
+ const r=await api("/rest/v1/"+encodeURIComponent(table)+"?"+encodeURIComponent(key)+"=eq."+encodeURIComponent(value),{method:"DELETE",headers:{Prefer:"return=minimal"}});
+ const d=await r.text();if(!r.ok)throw new Error(d||"Could not delete record.");
 }
-async function loadTable(){
-  await ensureSupabase();
-  const def=schema[currentTable];
-  $("#tableStatus").textContent="Loading "+def.label+"...";
-  const {data,error}=await sb.from(currentTable).select("*").order(def.order,{ascending:false}).limit(100);
-  if(error){$("#tableStatus").innerHTML='<span class="error notice">'+esc(error.message)+'</span>';cache=[];renderTable();return;}
-  cache=data||[]; renderTable();
+function renderNav(){
+ const nav=$("#nav");nav.innerHTML='<small>Content</small>'+tables.map(([t,l])=>'<button data-table="'+t+'">'+l+'</button>').join("")+'<small>System</small><button data-table="dashboard">Dashboard</button>';
+ nav.querySelectorAll("button").forEach(b=>b.onclick=()=>openSection(b.dataset.table));
+}
+function displayValue(v){if(v===null||v===undefined)return "—";if(typeof v==="object")return JSON.stringify(v);return String(v)}
+async function openSection(table){
+ if(table==="dashboard"){renderDashboard();return}
+ state.table=table;const label=tables.find(x=>x[0]===table)?.[1]||table;$("#pageTitle").textContent=label;
+ document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.table===table));
+ $("#content").innerHTML='<div class="panel"><div class="empty">Loading…</div></div>';
+ try{state.rows=await loadTable(table);renderTable()}catch(e){$("#content").innerHTML='<div class="panel"><div class="empty"><div class="msg error">'+esc(e.message)+'</div></div></div>'}
 }
 function renderTable(){
-  const def=schema[currentTable], q=$("#filter").value.trim().toLowerCase();
-  const rows=cache.filter(r=>!q||JSON.stringify(r).toLowerCase().includes(q));
-  $("#tableStatus").textContent=rows.length+" record(s) shown";
-  $("#thead").innerHTML="<tr>"+def.fields.slice(0,5).map(f=>"<th>"+esc(f[1])+"</th>").join("")+"<th>Actions</th></tr>";
-  $("#tbody").innerHTML=rows.length?rows.map(r=>{
-    const cells=def.fields.slice(0,5).map(([k])=>{let v=r[k];if(typeof v==="boolean")v=v?"Yes":"No";if(v&&String(v).length>80)v=String(v).slice(0,80)+"…";return "<td>"+esc(v??"")+"</td>"}).join("");
-    return "<tr>"+cells+'<td class="actions"><button class="secondary" data-edit="'+esc(r.id)+'">Edit</button><button class="danger" data-delete="'+esc(r.id)+'">Delete</button></td></tr>';
-  }).join(""):'<tr><td colspan="6" class="empty">No records yet.</td></tr>';
+ const rows=state.rows;let cols=[];
+ rows.forEach(r=>Object.keys(r).forEach(k=>{if(!cols.includes(k)&&cols.length<7)cols.push(k)}));
+ if(!cols.length) cols=["id"];
+ const label=tables.find(x=>x[0]===state.table)?.[1]||state.table;
+ $("#content").innerHTML='<p class="section-note">এই section-এর records এখানে যোগ, edit এবং delete করা যাবে।</p>'+
+ '<div class="panel"><div class="panel-head"><h3>'+esc(label)+' <span class="badge">'+rows.length+'</span></h3><div class="toolbar"><input id="search" class="search" placeholder="Search…"><button id="add" class="primary">+ Add record</button></div></div>'+
+ '<div class="table-wrap"><table class="table"><thead><tr>'+cols.map(c=>'<th>'+esc(c)+'</th>').join("")+'<th>Action</th></tr></thead><tbody>'+
+ (rows.length?rows.map((r,i)=>'<tr>'+cols.map(c=>'<td>'+esc(displayValue(r[c]).slice(0,180))+'</td>').join("")+
+ '<td><div class="actions"><button class="ghost edit" data-i="'+i+'">Edit</button><button class="danger del" data-i="'+i+'">Delete</button></div></td></tr>').join(""):'<tr><td colspan="'+(cols.length+1)+'"><div class="empty">No records yet</div></td></tr>')+
+ '</tbody></table></div></div>';
+ $("#add").onclick=()=>openEditor(null);
+ $("#content").querySelectorAll(".edit").forEach(b=>b.onclick=()=>openEditor(state.rows[+b.dataset.i]));
+ $("#content").querySelectorAll(".del").forEach(b=>b.onclick=()=>removeRow(state.rows[+b.dataset.i]));
+ $("#search").oninput=e=>filterRows(e.target.value);
 }
-async function saveRecord(e){
-  e.preventDefault();
-  await ensureSupabase();
-  const payload=valuesFromForm();
-  if(currentTable==="government_updates"&&!payload.title){alert("Title is required.");return;}
-  if(currentTable==="jobs"&&!payload.title){alert("Title is required.");return;}
-  if(currentTable==="scholarships"&&!payload.title){alert("Title is required.");return;}
-  if(currentTable==="results"&&!payload.title){alert("Title is required.");return;}
-  if(currentTable==="form_fill_up"&&!payload.title){alert("Title is required.");return;}
-  if(currentTable==="schemes"&&!payload.title){alert("Title is required.");return;}
-  if(currentTable==="lottery_results"&&!payload.lottery_name){alert("Lottery name is required.");return;}
-  if(currentTable==="ai_tools"&&!payload.name){alert("Name is required.");return;}
-  if(currentTable==="breaking_news"&&!payload.title){alert("Title is required.");return;}
-  if(currentTable==="quick_links"&&!payload.title){alert("Title is required.");return;}
-  const btn=$("#saveRecord");btn.disabled=true;btn.textContent="Saving...";
-  let result;
-  if(editingId) result=await sb.from(currentTable).update(payload).eq("id",editingId);
-  else result=await sb.from(currentTable).insert(payload);
-  btn.disabled=false;btn.textContent="Save";
-  if(result.error){alert(result.error.message);return;}
-  closeEditor();await loadTable();
+function filterRows(q){const query=q.toLowerCase();document.querySelectorAll(".table tbody tr").forEach(tr=>tr.style.display=tr.textContent.toLowerCase().includes(query)?"":"none")}
+function keyFor(row){return ["id","uuid","user_id","slug"].find(k=>row&&row[k]!==undefined&&row[k]!==null)}
+function openEditor(row){
+ state.edit=row;$("#modalTitle").textContent=row?"Edit record":"Add record";$("#modalMsg").innerHTML="";
+ $("#jsonEditor").value=JSON.stringify(row||{},null,2);$("#modal").classList.remove("hidden");
 }
-async function deleteRecord(id){
-  if(!confirm("Delete this record permanently?"))return;
-  await ensureSupabase();
-  const {error}=await sb.from(currentTable).delete().eq("id",id);
-  if(error)alert(error.message);else await loadTable();
+function closeEditor(){$("#modal").classList.add("hidden");state.edit=null}
+async function save(){
+ let payload;try{payload=JSON.parse($("#jsonEditor").value)}catch(e){msg($("#modalMsg"),"JSON ঠিক নয়। Please check the format.");return}
+ const btn=$("#saveBtn");btn.disabled=true;btn.textContent="Saving…";
+ try{
+  if(state.edit){
+   const key=keyFor(state.edit);if(!key)throw new Error("এই record-এর update করার primary key পাওয়া যায়নি।");
+   delete payload[key];await updateRecord(state.table,key,state.edit[key],payload);
+   toast("Record updated successfully.");
+  }else{await createRecord(state.table,payload);toast("Record added successfully.")}
+  closeEditor();await openSection(state.table);
+ }catch(e){msg($("#modalMsg"),e.message)}finally{btn.disabled=false;btn.textContent="Save record"}
 }
-function populateSections(){
-  $("#sectionSelect").innerHTML=Object.entries(schema).map(([k,v])=>'<option value="'+k+'">'+esc(v.label)+'</option>').join("");
-  $("#overview").innerHTML=Object.entries(schema).map(([k,v])=>'<button class="tab '+(k===currentTable?"active":"")+'" data-tab="'+k+'">'+esc(v.label)+'</button>').join("");
-  $("#sectionSelect").value=currentTable;
+async function removeRow(row){
+ const key=keyFor(row);if(!key)return toast("Delete key পাওয়া যায়নি।");
+ if(!confirm("এই recordটি delete করতে চান?"))return;
+ try{await deleteRecord(state.table,key,row[key]);toast("Record deleted.");await openSection(state.table)}catch(e){toast(e.message)}
 }
-async function boot(){
-  try{await ensureSupabase();}catch(err){showAuth(err?.message||"Supabase connection failed.",true);return;}
-  const {data}=await sb.auth.getSession();
-  if(!data.session)return;
-  const {data:adminRow,error}=await sb.from("admin_users").select("user_id").eq("user_id",data.session.user.id).maybeSingle();
-  if(error||!adminRow){$("#authMessage").innerHTML='<div class="notice error">This account is signed in but is not an approved admin.</div>';return;}
-  $("#authCard").classList.add("hidden");$("#sessionActions").classList.remove("hidden");$("#dashboard").classList.remove("hidden");
-  populateSections();await loadTable();
+async function renderDashboard(){
+ $("#pageTitle").textContent="Dashboard";document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.table==="dashboard"));
+ $("#content").innerHTML='<p class="section-note">Kicholche content management-এর overview.</p><div id="stats" class="cards"></div><div style="height:18px"></div><div class="panel"><div class="panel-head"><h3>Quick actions</h3></div><div style="padding:20px;display:flex;gap:9px;flex-wrap:wrap">'+tables.map(x=>'<button class="ghost quick" data-t="'+x[0]+'">'+x[1]+'</button>').join("")+'</div></div>';
+ const stats=$("#stats");stats.innerHTML=tables.slice(0,4).map(x=>'<div class="stat"><div class="label">'+x[1]+'</div><div class="num">…</div></div>').join("");
+ const counts=await Promise.all(tables.slice(0,4).map(async x=>{try{return (await loadTable(x[0])).length}catch(e){return 0}}));
+ stats.querySelectorAll(".num").forEach((n,i)=>n.textContent=counts[i]);
+ $("#content").querySelectorAll(".quick").forEach(b=>b.onclick=()=>openSection(b.dataset.t));
 }
-$("#loginForm").onsubmit=async(e)=>{
-  e.preventDefault();
-  const email=$("#email").value.trim(),password=$("#password").value;
-  if(!email||!password){authMessage.innerHTML='<div class="notice error">Email and password are required.</div>';return;}
-  const btn=$("#login"); btn.disabled=true; btn.textContent="Signing in...";
-  authMessage.innerHTML='<div class="notice">Signing in...</div>';
-  try{
-    await ensureSupabase();
-    const {error}=await sb.auth.signInWithPassword({email,password});
-    if(error) authMessage.innerHTML='<div class="notice error">'+esc(error.message)+'</div>';
-    else location.reload();
-  }catch(err){
-    authMessage.innerHTML='<div class="notice error">'+esc(err?.message||"Sign-in failed. Please refresh and try again.")+'</div>';
-  }finally{
-    btn.disabled=false; btn.textContent="Sign in";
-  }
+async function enter(session){
+ state.token=session.access_token;state.user=session.user;
+ const ok=await verifyAdmin(state.user.id);if(!ok)throw new Error("এই accountটি Kicholche admin_users-এ অনুমোদিত নয়.");
+ saveSession();$("#userEmail").textContent=state.user.email||"";$("#loginView").classList.add("hidden");$("#appView").classList.remove("hidden");renderNav();await renderDashboard();
+}
+$("#loginForm").onsubmit=async e=>{
+ e.preventDefault();const btn=$("#loginBtn");btn.disabled=true;btn.textContent="Signing in…";msg($("#loginMsg"),"");
+ try{const d=await authLogin($("#email").value.trim(),$("#password").value);await enter(d)}catch(e){msg($("#loginMsg"),e.message)}finally{btn.disabled=false;btn.textContent="Sign in"}
 };
-$("#logout").onclick=async()=>{await ensureSupabase();await sb.auth.signOut();location.reload()};
-$("#sectionSelect").onchange=async e=>{currentTable=e.target.value;populateSections();await loadTable()};
-$("#filter").oninput=renderTable;
-$("#newRecord").onclick=()=>openEditor();
-$("#closeEditor").onclick=closeEditor;$("#cancelEditor").onclick=closeEditor;
-$("#editorForm").onsubmit=saveRecord;
-$("#overview").onclick=async e=>{const k=e.target.dataset.tab;if(!k)return;currentTable=k;populateSections();await loadTable()};
-$("#tbody").onclick=async e=>{
-  const edit=e.target.dataset.edit, del=e.target.dataset.delete;
-  if(edit){const row=cache.find(x=>x.id===edit);if(row)openEditor(row)}
-  if(del)await deleteRecord(del);
-};
-boot();
+$("#logout").onclick=()=>{clearSession();state.token=null;state.user=null;$("#appView").classList.add("hidden");$("#loginView").classList.remove("hidden");$("#password").value=""};
+$("#closeModal").onclick=closeEditor;$("#cancelModal").onclick=closeEditor;$("#saveBtn").onclick=save;
+window.addEventListener("keydown",e=>{if(e.key==="Escape")closeEditor()});
+renderNav();
+try{const saved=JSON.parse(localStorage.getItem("kicholche_admin_session")||"null");if(saved?.access_token&&saved?.user)enter(saved).catch(()=>clearSession())}catch(e){clearSession()}
+})();
 </script>
+<script src="config.js"></script>
 </body>
 </html>
