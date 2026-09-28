@@ -69,13 +69,13 @@ label{font-weight:700;font-size:12px;color:#365474}.grid{display:grid;grid-templ
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
+const $=s=>document.querySelector(s);
 const authMessage=$("#authMessage");
 if(!window.supabase?.createClient){
   authMessage.innerHTML='<div class="notice error">Supabase client failed to load. Refresh the page or check your internet/CDN connection.</div>';
   throw new Error("Supabase client failed to load");
 }
 const sb=window.supabase.createClient(KICHOLOCHE_CONFIG.SUPABASE_URL,KICHOLOCHE_CONFIG.SUPABASE_ANON_KEY);
-const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 const schema={
  government_updates:{label:"Government Updates",order:"created_at",fields:[
