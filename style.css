@@ -1,6 +1,6 @@
 :root{
-  --navy:#061c44;--navy-2:#062f63;--blue:#0868ee;--blue-2:#0b4fae;
-  --bg:#f4f8fc;--card:#fff;--line:#d9e6f2;--text:#17365d;--muted:#7087a0;
+  --navy:#061C44;--navy-2:#062f63;--blue:#0B4DFF;--blue-2:#0b4fae;
+  --bg:#F8FAFC;--accent:#14B8A6;--card:#fff;--line:#d9e6f2;--text:#17365d;--muted:#7087a0;
   --red:#ef3340;--green:#51a451;--orange:#f2a31b;--purple:#a348df;--cyan:#42b6bd;
   --shadow:0 2px 12px rgba(18,65,105,.10);--radius:9px
 }
