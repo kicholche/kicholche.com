@@ -1,590 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kicholche | Government Information Hub</title>
-
-<link rel="stylesheet" href="style.css">
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#061c44">
+<meta name="description" content="Kicholche — Government Information Hub. চাকরি, স্কলারশিপ, রেজাল্ট, সরকারি প্রকল্প, ফর্ম ফিল-আপ ও আরও অনেক সরকারি তথ্য এক জায়গায়।">
+<title>Kicholche — Government Information Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<!-- ================= HEADER ================= -->
+<div id="languageModal" class="modal-backdrop" aria-hidden="true">
+  <div class="language-modal" role="dialog" aria-modal="true">
+    <div class="language-mark">K</div>
+    <h2>Choose your preferred language</h2>
+    <p>আপনার পছন্দের ভাষা নির্বাচন করুন</p>
+    <div class="language-options">
+      <button data-language="bn">বাংলা</button>
+      <button data-language="hi">हिन्दी</button>
+      <button data-language="en">English</button>
+    </div>
+  </div>
+</div>
 
 <header class="top-header">
-
-<div class="header-container">
-
-<div class="logo-area">
-
-<div class="logo-box">K</div>
-
-<div class="logo-text">
-
-<h1>Kicholche</h1>
-
-<p>Government Information Hub</p>
-
-</div>
-
-</div>
-
-<div class="search-area">
-
-<div class="search-box">
-
-<i class="fa-solid fa-magnifying-glass"></i>
-
-<input type="text" placeholder="চাকরি, স্কলারশিপ, রেজাল্ট, লটারি, প্রকল্প, আপডেট...">
-
-<button><i class="fa-solid fa-search"></i></button>
-
-</div>
-
-</div>
-
-<div class="header-right">
-
-<div class="weather-card">
-
-<i class="fa-solid fa-cloud-sun"></i>
-
-<div>
-
-<span>কলকাতা</span>
-
-<strong>32°C</strong>
-
-</div>
-
-</div>
-
-<div class="icon-btn notify">
-
-<i class="fa-solid fa-bell"></i>
-
-<span>3</span>
-
-</div>
-
-<div class="icon-btn">
-
-<i class="fa-solid fa-user"></i>
-
-</div>
-
-<div class="login-text">লগইন / রেজিস্টার</div>
-
-<div class="icon-btn">
-
-<i class="fa-solid fa-bars"></i>
-
-</div>
-
-</div>
-
-</div>
-
+  <div class="shell header-grid">
+    <a class="brand" href="./" aria-label="Kicholche Home">
+      <span class="brand-mark">K</span>
+      <span><strong>Kicholche</strong><small>Government Information Hub</small></span>
+    </a>
+    <form id="searchForm" class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="searchInput" type="search" autocomplete="off" placeholder="চাকরি, স্কলারশিপ, রেজাল্ট, লটারি, প্রকল্প, আপডেট...">
+      <button aria-label="Search"><i class="fa-solid fa-search"></i></button>
+    </form>
+    <div class="header-tools">
+      <div class="weather"><i class="fa-solid fa-cloud-sun"></i><span>কলকাতা<strong>32°C</strong></span></div>
+      <button class="tool-icon" id="notificationButton" aria-label="Notifications"><i class="fa-solid fa-bell"></i><b>3</b></button>
+      <button class="tool-icon" id="profileButton" aria-label="Profile"><i class="fa-solid fa-user"></i></button>
+      <span class="login-label">লগইন / রেজিস্টার</span>
+      <button class="tool-icon" id="menuButton" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
 </header>
 
-<!-- ================= NAVBAR ================= -->
-
 <nav class="main-nav">
-
-<div class="nav-container">
-
-<a class="active"><i class="fa-solid fa-house"></i> Home</a>
-
-<a><i class="fa-solid fa-briefcase"></i> Government Updates</a>
-
-<a><i class="fa-solid fa-clipboard-list"></i> Jobs</a>
-
-<a><i class="fa-solid fa-graduation-cap"></i> Scholarships</a>
-
-<a><i class="fa-solid fa-award"></i> Results</a>
-
-<a><i class="fa-solid fa-ticket"></i> Lottery Results</a>
-
-<a><i class="fa-solid fa-book"></i> Education</a>
-
-<a><i class="fa-solid fa-landmark"></i> Schemes</a>
-
-<a><i class="fa-solid fa-file-circle-check"></i> Form Fill-up</a>
-
-<a><i class="fa-solid fa-link"></i> Quick Links</a>
-
-<a><i class="fa-solid fa-robot"></i> AI Tools</a>
-
-</div>
-
+  <div class="shell nav-row">
+    <a class="active" href="./"><i class="fa-solid fa-house"></i> Home</a>
+    <a href="#government-updates"><i class="fa-solid fa-briefcase"></i> Government Updates</a>
+    <a href="#jobs"><i class="fa-solid fa-clipboard-list"></i> Jobs</a>
+    <a href="#scholarships"><i class="fa-solid fa-graduation-cap"></i> Scholarships</a>
+    <a href="#results"><i class="fa-solid fa-award"></i> Results</a>
+    <a href="#lottery"><i class="fa-solid fa-ticket"></i> Lottery Results</a>
+    <a href="#education"><i class="fa-solid fa-book"></i> Education</a>
+    <a href="#schemes"><i class="fa-solid fa-landmark"></i> Schemes</a>
+    <a href="#form-fill-up"><i class="fa-solid fa-file-circle-check"></i> Form Fill-up</a>
+    <a href="#quick-links"><i class="fa-solid fa-link"></i> Quick Links</a>
+    <a href="#ai-tools"><i class="fa-solid fa-robot"></i> AI Tools</a>
+  </div>
 </nav>
 
-<!-- ================= BREAKING ================= -->
-
-<section class="breaking">
-
-<div class="breaking-label">
-
-<i class="fa-solid fa-bolt"></i>
-
-ব্রেকিং নিউজ
-
-</div>
-
-<div class="breaking-marquee">
-
-<marquee>২০২৬ সালের মাধ্যমিক পরীক্ষার রেজাল্ট প্রকাশ • পশ্চিমবঙ্গে নতুন নিয়োগ বিজ্ঞপ্তি • আবেদন শুরু • গুরুত্বপূর্ণ সরকারি আপডেট</marquee>
-
-</div>
-
-<div class="breaking-arrows">
-
-<i class="fa-solid fa-chevron-left"></i>
-
-<i class="fa-solid fa-chevron-right"></i>
-
-</div>
-
+<main>
+<section class="shell breaking">
+  <div class="breaking-label"><i class="fa-solid fa-bolt"></i> <span data-i18n="breaking">ব্রেকিং নিউজ</span></div>
+  <div class="ticker"><div id="breakingTicker" class="ticker-track"></div></div>
+  <div class="ticker-controls"><button id="tickerPrev">‹</button><button id="tickerNext">›</button></div>
 </section>
 
-<!-- ================= HERO ================= -->
+<section class="shell hero-grid">
+  <article class="hero">
+    <div class="hero-copy">
+      <h1 data-i18n="heroTitle">সরকারের সব তথ্য<br><em>এক জায়গায়</em></h1>
+      <p data-i18n="heroSub">চাকরি, স্কলারশিপ, রেজাল্ট, লটারি, প্রকল্প, ফর্ম ফিল-আপ এবং আরও অনেক কিছু...</p>
+      <a class="primary-pill" href="#government-updates" data-i18n="seeAll">সব দেখুন <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <span class="hero-badge">SMART NAGRIK<br><strong>SMART BANGLA</strong></span>
+    <div class="hero-dots"><span class="on"></span><span></span><span></span><span></span></div>
+  </article>
 
-<section class="hero-section">
+  <article class="panel" id="importantPanel">
+    <header class="panel-title"><h2 data-i18n="importantUpdates">গুরুত্বপূর্ণ সরকারি আপডেট</h2><a href="#government-updates">সব দেখুন →</a></header>
+    <div id="importantList" class="compact-list"></div>
+  </article>
 
-<div class="hero-grid">
+  <article class="panel" id="formPanel">
+    <header class="panel-title"><h2 data-i18n="runningForms">চলমান ফর্ম ফিল-আপ</h2><a href="#form-fill-up">সব দেখুন →</a></header>
+    <div id="formList" class="compact-list"></div>
+  </article>
 
-<!-- Left -->
-
-<div class="hero-left">
-
-<div class="overlay">
-
-<h2>সরকারের সব তথ্য<br><span>এক জায়গায়</span></h2>
-
-<p>চাকরি, স্কলারশিপ, রেজাল্ট, লটারি, প্রকল্প, ফর্ম ফিল-আপ এবং আরও অনেক কিছু...</p>
-
-<a class="hero-btn">সব দেখুন <i class="fa-solid fa-arrow-right"></i></a>
-
-</div>
-
-</div>
-
-<!-- Right -->
-
-<div class="hero-right">
-
-<div class="panel">
-
-<div class="panel-head">
-
-<h3>গুরুত্বপূর্ণ সরকারি আপডেট</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<div class="list-item"><span>PM Kisan</span><span class="new">নতুন</span></div>
-
-<div class="list-item"><span>লক্ষ্মী ভাণ্ডার</span><span class="new">নতুন</span></div>
-
-<div class="list-item"><span>WBPSC</span><span class="live">চলমান</span></div>
-
-<div class="list-item"><span>নতুন নিয়োগ</span><span class="live">চলমান</span></div>
-
-</div>
-
-<div class="panel">
-
-<div class="panel-head">
-
-<h3>চলমান Form Fill-up</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<div class="apply-item">
-
-<span>WBPSC</span>
-
-<button>আবেদন করুন</button>
-
-</div>
-
-<div class="apply-item">
-
-<span>ICDS</span>
-
-<button>আবেদন করুন</button>
-
-</div>
-
-<div class="apply-item">
-
-<span>SSC CGL</span>
-
-<button>আবেদন করুন</button>
-
-</div>
-
-<div class="apply-item">
-
-<span>NSP Scholarship</span>
-
-<button>আবেদন করুন</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+  <article class="hero-mini" aria-label="Form Fill-up">
+    <i class="fa-solid fa-file-lines"></i><div><strong>Form Fill-up</strong><span>ফর্মের লিঙ্ক</span></div>
+  </article>
 </section>
 
-<!-- ================= CATEGORY ================= -->
-
-<section class="categories">
-
-<div class="cat-grid">
-
-<div class="cat red">
-
-<i class="fa-solid fa-briefcase"></i>
-
-<h4>সরকারি চাকরি</h4>
-
-</div>
-
-<div class="cat blue">
-
-<i class="fa-solid fa-graduation-cap"></i>
-
-<h4>স্কলারশিপ</h4>
-
-</div>
-
-<div class="cat green">
-
-<i class="fa-solid fa-square-poll-vertical"></i>
-
-<h4>রেজাল্ট</h4>
-
-</div>
-
-<div class="cat purple">
-
-<i class="fa-solid fa-book"></i>
-
-<h4>শিক্ষা ও পরীক্ষা</h4>
-
-</div>
-
-<div class="cat orange">
-
-<i class="fa-solid fa-landmark"></i>
-
-<h4>সরকারি প্রকল্প</h4>
-
-</div>
-
-<div class="cat cyan">
-
-<i class="fa-solid fa-link"></i>
-
-<h4>দ্রুত লিঙ্কস</h4>
-
-</div>
-
-</div>
-
+<section class="shell category-grid">
+  <a class="category red" href="#jobs"><i class="fa-solid fa-briefcase"></i><strong data-i18n="jobsBn">সরকারি চাকরি</strong><small>নিয়োগ বিজ্ঞপ্তি, আবেদন, পরীক্ষার সুযোগ</small></a>
+  <a class="category blue" href="#scholarships"><i class="fa-solid fa-graduation-cap"></i><strong>স্কলারশিপ</strong><small>পড়াশোনার জন্য আর্থিক সহায়তা</small></a>
+  <a class="category green" href="#results"><i class="fa-solid fa-square-poll-vertical"></i><strong>রেজাল্ট</strong><small>মাধ্যমিক, উচ্চমাধ্যমিক, কলেজ, বিশ্ববিদ্যালয়</small></a>
+  <a class="category purple" href="#education"><i class="fa-solid fa-book-open"></i><strong>শিক্ষা ও পরীক্ষা</strong><small>পরীক্ষার রুটিন, সিলেবাস, প্রস্তুতি</small></a>
+  <a class="category orange" href="#schemes"><i class="fa-solid fa-landmark"></i><strong>সরকারি প্রকল্প</strong><small>PM Kisan, লক্ষ্মী ভাণ্ডার, কন্যাশ্রী</small></a>
+  <a class="category cyan" href="#quick-links"><i class="fa-solid fa-link"></i><strong>দ্রুত লিঙ্কস</strong><small>প্যান, ভোটার, পাসপোর্ট, রেলওয়ে</small></a>
 </section>
 
-<!-- ================= MAIN CONTENT ================= -->
-
-<main class="content-grid">
-
-<section class="left-content">
-
-<div class="content-card">
-
-<div class="card-head">
-
-<h3>সর্বশেষ সরকারি আপডেট</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<ul>
-
-<li>WBPSC নতুন নিয়োগ বিজ্ঞপ্তি</li>
-
-<li>ICDS সুপারভাইজার পদে নিয়োগ</li>
-
-<li>স্বাস্থ্য দপ্তরের নতুন আপডেট</li>
-
-<li>কৃষকবন্ধু প্রকল্প</li>
-
-</ul>
-
-</div>
-
-<div class="content-card">
-
-<div class="card-head">
-
-<h3>সর্বশেষ সরকারি চাকরি</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<ul>
-
-<li>WBPSC Group C & D</li>
-
-<li>IB নিয়োগ</li>
-
-<li>TCS</li>
-
-<li>ICICI Bank</li>
-
-</ul>
-
-</div>
-
-<div class="content-card">
-
-<div class="card-head">
-
-<h3>সর্বশেষ স্কলারশিপ</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<ul>
-
-<li>NSP Scholarship</li>
-
-<li>OBC Scholarship</li>
-
-<li>SC/ST Scholarship</li>
-
-</ul>
-
-</div>
-
-<div class="content-card">
-
-<div class="card-head">
-
-<h3>সর্বশেষ রেজাল্ট</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<ul>
-
-<li>WBJEE Result</li>
-
-<li>ICSE Result</li>
-
-<li>NEET Result</li>
-
-</ul>
-
-</div>
-
+<section class="shell dashboard-grid">
+  <div class="four-cards">
+    <article class="content-card" id="government-updates"><header><h2>সর্বশেষ সরকারি আপডেট</h2><a href="#government-updates">সব দেখুন →</a></header><ul id="governmentList"></ul></article>
+    <article class="content-card" id="jobs"><header><h2>সর্বশেষ সরকারি চাকরি</h2><a href="#jobs">সব দেখুন →</a></header><ul id="jobsList"></ul></article>
+    <article class="content-card" id="scholarships"><header><h2>সর্বশেষ স্কলারশিপ</h2><a href="#scholarships">সব দেখুন →</a></header><ul id="scholarshipList"></ul></article>
+    <article class="content-card" id="results"><header><h2>সর্বশেষ রেজাল্ট</h2><a href="#results">সব দেখুন →</a></header><ul id="resultList"></ul></article>
+  </div>
+  <aside class="sidebar">
+    <article class="content-card" id="schemes"><header><h2>সরকারি প্রকল্পসমূহ</h2><a href="#schemes">সব দেখুন →</a></header><ul id="schemeList"></ul></article>
+    <article class="content-card" id="advice"><header><h2>গুরুত্বপূর্ণ পরামর্শ</h2><a href="#quick-links">সব দেখুন →</a></header>
+      <ul class="advice-list"><li>চাকরির সরকারি বিজ্ঞপ্তি যাচাই করুন <b>›</b></li><li>স্কলারশিপের জন্য সঠিক ডকুমেন্ট রাখুন <b>›</b></li><li>রেজাল্ট দেখতে অফিসিয়াল লিঙ্ক ব্যবহার করুন <b>›</b></li><li>ফর্ম ফিল-আপে ভুল হলে কী করবেন? <b>›</b></li></ul>
+    </article>
+  </aside>
 </section>
 
-<aside class="right-sidebar">
+<section class="shell lottery-section" id="lottery">
+  <header><h2><i class="fa-solid fa-ticket"></i> লটারি রেজাল্ট</h2><a href="#lottery">সব দেখুন →</a></header>
+  <div id="lotteryList" class="lottery-grid"></div>
+</section>
 
-<div class="content-card">
-
-<div class="card-head">
-
-<h3>সরকারি প্রকল্প</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<ul>
-
-<li>PM Kisan</li>
-
-<li>লক্ষ্মী ভাণ্ডার</li>
-
-<li>অন্নপূর্ণা</li>
-
-<li>কন্যাশ্রী</li>
-
-</ul>
-
-</div>
-
-<div class="content-card">
-
-<div class="card-head">
-
-<h3>গুরুত্বপূর্ণ পরামর্শ</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<ul>
-
-<li>চাকরির প্রস্তুতি</li>
-
-<li>স্কলারশিপ আবেদন</li>
-
-<li>ফর্ম ভুল এড়ান</li>
-
-</ul>
-
-</div>
-
-</aside>
-
+<section class="shell ai-section" id="ai-tools">
+  <header><h2><i class="fa-solid fa-users"></i> AI টুলস</h2><a href="#ai-tools">সব দেখুন →</a></header>
+  <div id="aiList" class="ai-grid"></div>
+</section>
 </main>
 
-<!-- ================= LOTTERY ================= -->
-
-<section class="lottery">
-
-<div class="lottery-head">
-
-<h3>লটারি রেজাল্ট</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<div class="lottery-grid">
-
-<div>West Bengal</div>
-
-<div>Nagaland</div>
-
-<div>Sikkim</div>
-
-<div>Dear Lottery</div>
-
-</div>
-
-</section>
-
-<!-- ================= AI TOOLS ================= -->
-
-<section class="ai-tools">
-
-<div class="ai-head">
-
-<h3>AI টুলস</h3>
-
-<a>সব দেখুন</a>
-
-</div>
-
-<div class="ai-grid">
-
-<div>Resume Builder</div>
-
-<div>Image Generator</div>
-
-<div>Content Writer</div>
-
-<div>PDF Tools</div>
-
-<div>Code Assistant</div>
-
-<div>Grammar Helper</div>
-
-</div>
-
-</section>
-
-<!-- ================= FOOTER ================= -->
-
 <footer class="footer">
-
-<div class="footer-grid">
-
-<div>
-
-<div class="footer-logo">K</div>
-
-<h3>Kicholche</h3>
-
-<p>Government Information Hub</p>
-
-</div>
-
-<div>
-
-<h4>দ্রুত লিঙ্ক</h4>
-
-<a>চাকরি</a>
-
-<a>স্কলারশিপ</a>
-
-<a>রেজাল্ট</a>
-
-</div>
-
-<div>
-
-<h4>সহায়তা</h4>
-
-<a>যোগাযোগ</a>
-
-<a>Privacy</a>
-
-<a>FAQ</a>
-
-</div>
-
-<div>
-
-<h4>নিউজলেটার</h4>
-
-<div class="subscribe">
-
-<input placeholder="আপনার ইমেইল লিখুন">
-
-<button>→</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="footer-bottom">
-
-© 2026 Kicholche. Made with ❤️
-
-</div>
-
+  <div class="shell footer-grid">
+    <div class="footer-brand"><span class="brand-mark">K</span><strong>Kicholche</strong><small>Government Information Hub</small><div class="socials"><a aria-label="Facebook">f</a><a aria-label="YouTube">▶</a><a aria-label="Telegram">✈</a><a aria-label="Instagram">◎</a><a aria-label="X">𝕏</a></div></div>
+    <div><h3>দ্রুত লিঙ্ক</h3><a href="#quick-links">ফর্ম ফিল-আপ</a><a href="#jobs">চাকরি</a><a href="#scholarships">স্কলারশিপ</a><a href="#results">রেজাল্ট</a></div>
+    <div><h3>গুরুত্বপূর্ণ সেবা</h3><a href="#quick-links">প্যান কার্ড</a><a href="#quick-links">পাসপোর্ট</a><a href="#quick-links">ই-সেবা</a><a href="#quick-links">রেলওয়ে</a></div>
+    <div><h3>সহায়তা</h3><a href="#quick-links">যোগাযোগ</a><a href="#quick-links">গোপনীয়তা নীতি</a><a href="#quick-links">শর্তাবলী</a><a href="#quick-links">FAQ</a></div>
+    <div class="newsletter"><h3>নিউজলেটার</h3><p>নতুন সরকারি আপডেটের নোটিফিকেশন পেতে ইমেইল দিন</p><form id="newsletterForm"><input type="email" required placeholder="আপনার ইমেইল লিখুন"><button>→</button></form></div>
+  </div>
+  <div class="shell footer-bottom"><span>© 2026 Kicholche. All Rights Reserved.</span><span>Made with ❤️ for a better tomorrow</span></div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-
 <script src="app.js"></script>
-
 </body>
 </html>
