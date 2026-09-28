@@ -82,8 +82,8 @@ function compactHTML(items){
 }
 function formHTML(items){
   return items.slice(0,5).map(x=>{
-    const inner='<span class="item-icon"><i class="fa-solid fa-file-circle-check"></i></span><span>'+esc(x.title)+'<small class="block">'+esc(x.date||"")+'</small></span><button class="status" type="button">আবেদন করুন</button>';
-    return '<div class="compact-item">'+itemLink(x,inner)+'</div>';
+    const action=x.url?safeUrl(x.url):"#";
+    return '<div class="compact-item"><span class="item-icon"><i class="fa-solid fa-file-circle-check"></i></span><span>'+esc(x.title)+'<small class="block">'+esc(x.date||"")+'</small></span>'+(action!=="#"?'<a class="status" href="'+esc(action)+'" target="_blank" rel="noopener noreferrer">আবেদন করুন</a>':'<span class="status">আবেদন করুন</span>')+'</div>';
   }).join("");
 }
 async function loadData(){
@@ -120,7 +120,11 @@ function render(d){
   document.querySelector("#importantList").innerHTML=compactHTML(d.government);
   document.querySelector("#formList").innerHTML=formHTML(d.forms);
   document.querySelector("#schemeList").innerHTML=listHTML(d.schemes);
-  document.querySelector("#lotteryList").innerHTML=d.lottery.map(x=>itemLink(x,'<i class="fa-solid fa-ticket"></i><span>'+esc(x.title)+'</span>')).map(x=>'<a class="lottery-card" href="'+(x.includes("<a ")?"#lottery":"#lottery")+'">'+x.replace(/^<a[^>]*>|<\/a>$/g,"")+'</a>').join("");
+  document.querySelector("#lotteryList").innerHTML=d.lottery.map(x=>{
+    const action=safeUrl(x.url);
+    const card='<i class="fa-solid fa-ticket"></i><span>'+esc(x.title)+'</span>';
+    return action!=="#" ? '<a class="lottery-card" href="'+esc(action)+'" target="_blank" rel="noopener noreferrer">'+card+'</a>' : '<a class="lottery-card" href="#lottery">'+card+'</a>';
+  }).join("");
   document.querySelector("#aiList").innerHTML=d.ai.map((x,i)=>{
     const icon=x.icon||["fa-file-lines","fa-image","fa-pen","fa-file-pdf","fa-spell-check","fa-code"][i%6];
     const inner='<i class="fa-solid '+esc(icon)+'"></i><span>'+esc(x.name||x.title||x)+'</span>';
