@@ -155,34 +155,34 @@ alter table quick_links enable row level security;
 alter table translation_records enable row level security;
 
 drop policy if exists public_read_government_updates on government_updates;
-create policy public_read_government_updates on government_updates for select to anon,authenticated using (is_published=true);
+create policy public_read_government_updates on government_updates for select to anon using (is_published=true);
 
 drop policy if exists public_read_jobs on jobs;
-create policy public_read_jobs on jobs for select to anon,authenticated using (lower(coalesce(status,'published'))='published');
+create policy public_read_jobs on jobs for select to anon using (lower(coalesce(status,'published'))='published');
 
 drop policy if exists public_read_scholarships on scholarships;
-create policy public_read_scholarships on scholarships for select to anon,authenticated using (coalesce(is_published,true)=true);
+create policy public_read_scholarships on scholarships for select to anon using (coalesce(is_published,true)=true);
 
 drop policy if exists public_read_results on results;
-create policy public_read_results on results for select to anon,authenticated using (coalesce(is_published,true)=true);
+create policy public_read_results on results for select to anon using (coalesce(is_published,true)=true);
 
 drop policy if exists public_read_form_fill_up on form_fill_up;
-create policy public_read_form_fill_up on form_fill_up for select to anon,authenticated using (lower(coalesce(status,'running'))<>'expired');
+create policy public_read_form_fill_up on form_fill_up for select to anon using (lower(coalesce(status,'running'))<>'expired');
 
 drop policy if exists public_read_schemes on schemes;
-create policy public_read_schemes on schemes for select to anon,authenticated using (lower(coalesce(status,'published'))='published');
+create policy public_read_schemes on schemes for select to anon using (lower(coalesce(status,'published'))='published');
 
 drop policy if exists public_read_lottery_results on lottery_results;
-create policy public_read_lottery_results on lottery_results for select to anon,authenticated using (lower(coalesce(status,'published'))='published');
+create policy public_read_lottery_results on lottery_results for select to anon using (lower(coalesce(status,'published'))='published');
 
 drop policy if exists public_read_ai_tools on ai_tools;
-create policy public_read_ai_tools on ai_tools for select to anon,authenticated using (active=true);
+create policy public_read_ai_tools on ai_tools for select to anon using (active=true);
 
 drop policy if exists public_read_breaking_news on breaking_news;
-create policy public_read_breaking_news on breaking_news for select to anon,authenticated using (active=true and (starts_at is null or starts_at<=now()) and (ends_at is null or ends_at>=now()));
+create policy public_read_breaking_news on breaking_news for select to anon using (active=true and (starts_at is null or starts_at<=now()) and (ends_at is null or ends_at>=now()));
 
 drop policy if exists public_read_quick_links on quick_links;
-create policy public_read_quick_links on quick_links for select to anon,authenticated using (coalesce(is_published,true)=true);
+create policy public_read_quick_links on quick_links for select to anon using (coalesce(is_published,true)=true);
 
 drop policy if exists public_read_translation_records on translation_records;
 create policy public_read_translation_records on translation_records for select to anon,authenticated using (true);
