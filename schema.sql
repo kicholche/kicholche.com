@@ -196,3 +196,19 @@ drop policy if exists "Public Read Scholarships" on scholarships;
 drop policy if exists "Public Read Results" on results;
 drop policy if exists "Public Read Form Fillup" on form_fill_up;
 drop policy if exists "Public Read Schemes" on schemes;
+
+
+-- Remove legacy duplicate permissive policies that overlap the hardened policies above.
+drop policy if exists "admins manage ai tools" on ai_tools;
+drop policy if exists "public read ai tools" on ai_tools;
+drop policy if exists "admins manage breaking" on breaking_news;
+drop policy if exists "public read breaking" on breaking_news;
+drop policy if exists "admins manage jobs" on jobs;
+drop policy if exists "public read published jobs" on jobs;
+drop policy if exists "admins manage lottery" on lottery_results;
+drop policy if exists "public read lottery" on lottery_results;
+drop policy if exists "admins manage schemes" on schemes;
+drop policy if exists "public read schemes" on schemes;
+drop policy if exists "public read quick_links" on quick_links;
+drop policy if exists "public read results" on results;
+drop policy if exists "public read scholarships" on scholarships;
