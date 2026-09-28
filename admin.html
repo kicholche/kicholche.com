@@ -110,7 +110,6 @@ async function ensureSupabase(){
   return sb;
 }
 
-<script>
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 const schema={
