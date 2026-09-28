@@ -1,90 +1,116 @@
 const K=window.KICHOLOCHE_CONFIG;
 const fallback={
   government:[
-    ["PM Kisan ২০তম কিস্তি প্রদান শুরু","12 Apr, 2025","নতুন"],
-    ["লক্ষ্মী ভাণ্ডার প্রকল্পে টাকা বৃদ্ধি","10 Apr, 2025","নতুন"],
-    ["অন্নপূর্ণা ভাণ্ডার — নতুন আবেদন শুরু","08 Apr, 2025","নতুন"],
-    ["WBPSC Group C ও D নিয়োগ বিজ্ঞপ্তি","06 Apr, 2025","চলমান"],
-    ["মাধ্যমিক পরীক্ষা ২০২৫ — ফলাফল প্রকাশ","05 Apr, 2025","জানুন"]
+    {title:"সরকারি নতুন আপডেট",date:"12 Apr, 2025",tag:"নতুন"},
+    {title:"সরকারি প্রকল্প ও সুবিধার নতুন ঘোষণা",date:"10 Apr, 2025",tag:"নতুন"},
+    {title:"নতুন আবেদন ও বিজ্ঞপ্তি প্রকাশ",date:"08 Apr, 2025",tag:"নতুন"},
+    {title:"নিয়োগ বিজ্ঞপ্তি ও সরকারি চাকরির আপডেট",date:"06 Apr, 2025",tag:"চলমান"},
+    {title:"পরীক্ষা ও ফলাফলের গুরুত্বপূর্ণ আপডেট",date:"05 Apr, 2025",tag:"জানুন"}
   ],
   jobs:[
-    ["WBPSC Group C ও D","12 Apr, 2025","পশ্চিমবঙ্গ"],
-    ["IB — বিভিন্ন পদে নিয়োগ","10 Apr, 2025","কেন্দ্রীয়"],
-    ["TCS — বিভিন্ন পদে নিয়োগ","08 Apr, 2025","বেসরকারি"],
-    ["ICICI Bank — Probationary Officer","06 Apr, 2025","বেসরকারি"],
-    ["RPF Constable","03 Apr, 2025","রেলওয়ে"]
+    {title:"WBPSC Group C ও D",date:"12 Apr, 2025",tag:"পশ্চিমবঙ্গ"},
+    {title:"IB — বিভিন্ন পদে নিয়োগ",date:"10 Apr, 2025",tag:"কেন্দ্রীয়"},
+    {title:"বিভিন্ন সরকারি ও বেসরকারি চাকরি",date:"08 Apr, 2025",tag:"চলমান"},
+    {title:"Banking — বিভিন্ন পদে নিয়োগ",date:"06 Apr, 2025",tag:"চলমান"},
+    {title:"RPF Constable",date:"03 Apr, 2025",tag:"রেলওয়ে"}
   ],
   scholarships:[
-    ["পশ্চিমবঙ্গ স্কলারশিপ 2025","12 Apr, 2025","পশ্চিমবঙ্গ"],
-    ["OBC Scholarship 2025","10 Apr, 2025","পশ্চিমবঙ্গ"],
-    ["SC ST Scholarship 2025","08 Apr, 2025","পশ্চিমবঙ্গ"],
-    ["NSP Scholarship 2025","06 Apr, 2025","কেন্দ্রীয়"],
-    ["Post Matric Scholarship","03 Apr, 2025","পশ্চিমবঙ্গ"]
+    {title:"পশ্চিমবঙ্গ স্কলারশিপ 2025",date:"12 Apr, 2025",tag:"পশ্চিমবঙ্গ"},
+    {title:"OBC Scholarship 2025",date:"10 Apr, 2025",tag:"পশ্চিমবঙ্গ"},
+    {title:"SC/ST Scholarship 2025",date:"08 Apr, 2025",tag:"পশ্চিমবঙ্গ"},
+    {title:"NSP Scholarship 2025",date:"06 Apr, 2025",tag:"কেন্দ্রীয়"},
+    {title:"Post Matric Scholarship",date:"03 Apr, 2025",tag:"পশ্চিমবঙ্গ"}
   ],
   results:[
-    ["মাধ্যমিক পরীক্ষা রেজাল্ট","12 Apr, 2025","WB"],
-    ["উচ্চমাধ্যমিক রেজাল্ট 2025","10 Apr, 2025","WB"],
-    ["WBJEE 2025","08 Apr, 2025","WB"],
-    ["ICSE রেজাল্ট 2025","06 Apr, 2025","ICSE"],
-    ["NEET 2025","03 Apr, 2025","কেন্দ্রীয়"]
+    {title:"মাধ্যমিক পরীক্ষা রেজাল্ট",date:"12 Apr, 2025",tag:"WB"},
+    {title:"উচ্চমাধ্যমিক রেজাল্ট 2025",date:"10 Apr, 2025",tag:"WB"},
+    {title:"WBJEE 2025",date:"08 Apr, 2025",tag:"WB"},
+    {title:"ICSE রেজাল্ট 2025",date:"06 Apr, 2025",tag:"ICSE"},
+    {title:"NEET 2025",date:"03 Apr, 2025",tag:"কেন্দ্রীয়"}
   ],
   forms:[
-    ["WBPSC Group C ও D","12 Apr, 2025"],
-    ["ICDS সুপারভাইজার","10 Apr, 2025"],
-    ["RPF কনস্টেবল","08 Apr, 2025"],
-    ["SSC CGL","05 Apr, 2025"],
-    ["পশ্চিমবঙ্গ স্কলারশিপ","01 Apr, 2025"]
+    {title:"WBPSC Group C ও D",date:"12 Apr, 2025"},
+    {title:"ICDS সুপারভাইজার",date:"10 Apr, 2025"},
+    {title:"RPF কনস্টেবল",date:"08 Apr, 2025"},
+    {title:"SSC CGL",date:"05 Apr, 2025"},
+    {title:"পশ্চিমবঙ্গ স্কলারশিপ",date:"01 Apr, 2025"}
   ],
-  schemes:[["PM Kisan সম্মান নিধি","12 Apr, 2025"],["লক্ষ্মী ভাণ্ডার প্রকল্প","10 Apr, 2025"],["অন্নপূর্ণা ভাণ্ডার","08 Apr, 2025"],["কন্যাশ্রী প্রকল্প","06 Apr, 2025"]],
+  schemes:[
+    {title:"PM Kisan সম্মান নিধি",date:"12 Apr, 2025"},
+    {title:"লক্ষ্মী ভাণ্ডার প্রকল্প",date:"10 Apr, 2025"},
+    {title:"অন্নপূর্ণা ভাণ্ডার",date:"08 Apr, 2025"},
+    {title:"কন্যাশ্রী প্রকল্প",date:"06 Apr, 2025"}
+  ],
   lottery:["West Bengal Lottery Result","Nagaland State Lottery Result","Sikkim State Lottery Result","Dear Lottery Result"],
   ai:["Resume Builder","Image Generator","Content Writer","PDF Tools","Grammar Helper","Code Assistant","Resume Formatter","Prompt Builder"],
-  breaking:["২০২৬ সালের মাধ্যমিক পরীক্ষার রেজাল্ট প্রকাশিত","পশ্চিমবঙ্গে নতুন নিয়োগ বিজ্ঞপ্তি প্রকাশ — আবেদন শুরু","কৃষকবন্ধু পরিবর্ধিত তালিকা প্রকাশ"]
+  breaking:["সরকারি পরীক্ষার নতুন ফলাফল প্রকাশ","নতুন নিয়োগ বিজ্ঞপ্তি প্রকাশ — আবেদন শুরু","সরকারি প্রকল্পের নতুন তালিকা প্রকাশ"]
 };
 const icons=["fa-leaf","fa-building-columns","fa-file-lines","fa-graduation-cap","fa-award"];
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 const fmt=d=>d?new Date(d).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}):"";
-async function rows(table,select="*"){
+const safeUrl=u=>{try{const x=new URL(u,location.href);return ["http:","https:","mailto:","tel:"].includes(x.protocol)?x.href:"#"}catch{return "#"}};
+async function rows(table,select="*",order=null){
   try{
     if(!window.supabase)return [];
-    const q=window.supabase.from(table).select(select).limit(8);
+    let q=window.supabase.from(table).select(select).limit(8);
+    if(order)q=q.order(order,{ascending:false});
     const r=await q;
     return r.error?[]:(r.data||[]);
   }catch{return []}
 }
-function normal(r,dateKeys=[]){
-  return (r||[]).map(x=>[x.title||x.name||x.lottery_name||"—",fmt(dateKeys.map(k=>x[k]).find(Boolean)||x.created_at),x.tag||x.status||""]).filter(x=>x[0]!=="—");
+function normalize(r,dateKeys=[]){
+  return (r||[]).map(x=>({
+    title:x.title||x.name||x.lottery_name||"—",
+    date:fmt(dateKeys.map(k=>x[k]).find(Boolean)||x.created_at),
+    tag:x.tag||x.status||"",
+    url:x.official_link||x.apply_url||x.url||x.apply_link||x.official_url||x.pdf_url||"",
+    icon:x.icon||""
+  })).filter(x=>x.title!=="—");
 }
-function listHTML(items,withIcon=true){
-  return items.slice(0,5).map((x,i)=>'<li><span class="item-icon"><i class="fa-solid '+icons[i%icons.length]+'"></i></span><span>'+esc(x[0])+'</span><small>'+esc(x[1]||"")+'</small></li>').join("");
+function itemLink(x,inner){
+  const url=safeUrl(x.url);
+  return url!=="#" ? '<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+inner+'</a>' : inner;
+}
+function listHTML(items){
+  return items.slice(0,5).map((x,i)=>itemLink(x,'<span class="item-icon"><i class="fa-solid '+icons[i%icons.length]+'"></i></span><span>'+esc(x.title)+'</span><small>'+esc(x.date||"")+'</small>')).map(x=>"<li>"+x+"</li>").join("");
 }
 function compactHTML(items){
-  return items.slice(0,5).map((x,i)=>'<div class="compact-item"><span class="item-icon"><i class="fa-solid '+icons[i%icons.length]+'"></i></span><span>'+esc(x[0])+'</span><b class="status '+(String(x[2]).toLowerCase().includes("new")||String(x[2]).includes("নতুন")?"new":"")+'">'+esc(x[2]||"চলমান")+'</b></div>').join("");
+  return items.slice(0,5).map((x,i)=>{
+    const inner='<span class="item-icon"><i class="fa-solid '+icons[i%icons.length]+'"></i></span><span>'+esc(x.title)+'</span><b class="status '+(String(x.tag).toLowerCase().includes("new")||String(x.tag).includes("নতুন")?"new":"")+'">'+esc(x.tag||"চলমান")+'</b>';
+    return '<div class="compact-item">'+itemLink(x,inner)+'</div>';
+  }).join("");
 }
-function formHTML(items){return items.slice(0,5).map(x=>'<div class="compact-item"><span class="item-icon"><i class="fa-solid fa-file-circle-check"></i></span><span>'+esc(x[0])+'<small class="block">'+esc(x[1]||"")+'</small></span><button class="status">আবেদন করুন</button></div>').join("")}
+function formHTML(items){
+  return items.slice(0,5).map(x=>{
+    const inner='<span class="item-icon"><i class="fa-solid fa-file-circle-check"></i></span><span>'+esc(x.title)+'<small class="block">'+esc(x.date||"")+'</small></span><button class="status" type="button">আবেদন করুন</button>';
+    return '<div class="compact-item">'+itemLink(x,inner)+'</div>';
+  }).join("");
+}
 async function loadData(){
   const [g,j,s,r,f,sc,l,a,b]=await Promise.all([
-    rows("government_updates","title,created_at,is_published"),
-    rows("jobs","title,created_at,status"),
-    rows("scholarships","title,published_on,is_published"),
-    rows("results","title,published_on,is_published"),
-    rows("form_fill_up","title,deadline,status"),
-    rows("schemes","title,created_at,status"),
-    rows("lottery_results","lottery_name,result_date,status"),
-    rows("ai_tools","name,description,icon,active,sort_order"),
-    rows("breaking_news","title,active,priority,starts_at,ends_at")
+    rows("government_updates","title,created_at,official_link,is_published", "created_at"),
+    rows("jobs","title,created_at,apply_url,status", "created_at"),
+    rows("scholarships","title,published_on,url,is_published", "published_on"),
+    rows("results","title,published_on,url,is_published", "published_on"),
+    rows("form_fill_up","title,deadline,apply_link,status", "deadline"),
+    rows("schemes","title,created_at,official_url,status", "created_at"),
+    rows("lottery_results","lottery_name,result_date,official_url,pdf_url,status", "result_date"),
+    rows("ai_tools","name,description,icon,route,active,sort_order", "sort_order"),
+    rows("breaking_news","title,url,active,priority,starts_at,ends_at", "priority")
   ]);
   const data={
-    government:g.length?normal(g,["created_at"]):fallback.government,
-    jobs:j.length?normal(j,["created_at"]):fallback.jobs,
-    scholarships:s.length?normal(s,["published_on","created_at"]):fallback.scholarships,
-    results:r.length?normal(r,["published_on","created_at"]):fallback.results,
-    forms:f.length?normal(f,["deadline","created_at"]):fallback.forms,
-    schemes:sc.length?normal(sc,["created_at"]):fallback.schemes,
-    lottery:l.length?l.slice(0,4).map(x=>x.lottery_name):fallback.lottery,
-    ai:a.length?a.sort((x,y)=>(x.sort_order||0)-(y.sort_order||0)).slice(0,8):fallback.ai,
-    breaking:b.length?b.sort((x,y)=>(x.priority||0)-(y.priority||0)).map(x=>x.title):fallback.breaking
+    government:g.length?normalize(g,["created_at"]):fallback.government,
+    jobs:j.length?normalize(j,["created_at"]):fallback.jobs,
+    scholarships:s.length?normalize(s,["published_on","created_at"]):fallback.scholarships,
+    results:r.length?normalize(r,["published_on","created_at"]):fallback.results,
+    forms:f.length?normalize(f,["deadline","created_at"]):fallback.forms,
+    schemes:sc.length?normalize(sc,["created_at"]):fallback.schemes,
+    lottery:l.length?l.slice(0,4).map(x=>({title:x.lottery_name,date:fmt(x.result_date),url:x.official_url||x.pdf_url||""})):fallback.lottery.map(title=>({title})),
+    ai:a.length?a.sort((x,y)=>(x.sort_order||0)-(y.sort_order||0)).slice(0,8):fallback.ai.map(name=>({name})),
+    breaking:b.length?b.map(x=>({title:x.title,url:x.url})):fallback.breaking.map(title=>({title}))
   };
-  render(data); return data;
+  render(data);
+  return data;
 }
 function render(d){
   document.querySelector("#governmentList").innerHTML=listHTML(d.government);
@@ -94,9 +120,13 @@ function render(d){
   document.querySelector("#importantList").innerHTML=compactHTML(d.government);
   document.querySelector("#formList").innerHTML=formHTML(d.forms);
   document.querySelector("#schemeList").innerHTML=listHTML(d.schemes);
-  document.querySelector("#lotteryList").innerHTML=d.lottery.map(x=>'<a class="lottery-card" href="#lottery"><i class="fa-solid fa-ticket"></i><span>'+esc(x)+'</span></a>').join("");
-  document.querySelector("#aiList").innerHTML=d.ai.map((x,i)=>'<a class="ai-card" href="#ai-tools"><i class="fa-solid '+esc(x.icon||["fa-file-lines","fa-image","fa-pen","fa-file-pdf","fa-spell-check","fa-code"][i%6])+'"></i><span>'+esc(x.name||x)+'</span></a>').join("");
-  document.querySelector("#breakingTicker").innerHTML=d.breaking.map(x=>'<span>'+esc(x)+'</span>').join("");
+  document.querySelector("#lotteryList").innerHTML=d.lottery.map(x=>itemLink(x,'<i class="fa-solid fa-ticket"></i><span>'+esc(x.title)+'</span>')).map(x=>'<a class="lottery-card" href="'+(x.includes("<a ")?"#lottery":"#lottery")+'">'+x.replace(/^<a[^>]*>|<\/a>$/g,"")+'</a>').join("");
+  document.querySelector("#aiList").innerHTML=d.ai.map((x,i)=>{
+    const icon=x.icon||["fa-file-lines","fa-image","fa-pen","fa-file-pdf","fa-spell-check","fa-code"][i%6];
+    const inner='<i class="fa-solid '+esc(icon)+'"></i><span>'+esc(x.name||x.title||x)+'</span>';
+    return x.route?itemLink({...x,url:x.route},inner):'<a class="ai-card" href="#ai-tools">'+inner+'</a>';
+  }).join("");
+  document.querySelector("#breakingTicker").innerHTML=d.breaking.map(x=>itemLink(x,'<span>'+esc(x.title)+'</span>')).join("");
 }
 const ui={
   bn:{breaking:"ব্রেকিং নিউজ",heroTitle:"সরকারের সব তথ্য<br><em>এক জায়গায়</em>",heroSub:"চাকরি, স্কলারশিপ, রেজাল্ট, লটারি, প্রকল্প, ফর্ম ফিল-আপ এবং আরও অনেক কিছু...",seeAll:"সব দেখুন",importantUpdates:"গুরুত্বপূর্ণ সরকারি আপডেট",runningForms:"চলমান ফর্ম ফিল-আপ"},
@@ -116,13 +146,24 @@ function languageSetup(){
   if(saved)setLanguage(saved);
 }
 function searchSetup(data){
-  const input=document.querySelector("#searchInput");
-  document.querySelector("#searchForm").addEventListener("submit",e=>{e.preventDefault();const q=input.value.trim().toLowerCase();if(!q)return;const all=[...data.government,...data.jobs,...data.scholarships,...data.results,...data.schemes];const found=all.filter(x=>x[0].toLowerCase().includes(q));document.querySelector("#searchForm").classList.toggle("search-found",found.length>0);const target=document.querySelector(found.length?"#government-updates":"#government-updates");target.scrollIntoView({behavior:"smooth",block:"start"});input.placeholder=found.length?found.map(x=>x[0]).slice(0,2).join(" • "):"কোনো মিল পাওয়া যায়নি — আবার চেষ্টা করুন"});
+  const input=document.querySelector("#searchInput"),form=document.querySelector("#searchForm");
+  const pool=[...data.government,...data.jobs,...data.scholarships,...data.results,...data.schemes,...data.forms];
+  let box=document.querySelector("#searchResults");
+  if(!box){box=document.createElement("div");box.id="searchResults";box.className="search-results";form.appendChild(box)}
+  form.addEventListener("submit",e=>{
+    e.preventDefault();
+    const q=input.value.trim().toLowerCase();
+    if(!q){box.innerHTML="";box.classList.remove("open");return}
+    const found=pool.filter(x=>String(x.title).toLowerCase().includes(q)).slice(0,8);
+    box.innerHTML=found.length?found.map(x=>'<div class="search-result-item">'+itemLink(x,'<strong>'+esc(x.title)+'</strong><small>'+esc(x.date||x.tag||"")+'</small>')+'</div>').join(""):'<div class="search-result-empty">কোনো মিল পাওয়া যায়নি</div>';
+    box.classList.add("open");
+  });
+  document.addEventListener("click",e=>{if(!form.contains(e.target))box.classList.remove("open")});
 }
 function misc(){
-  document.querySelector("#newsletterForm").addEventListener("submit",e=>{e.preventDefault();e.currentTarget.querySelector("input").value="";alert("ধন্যবাদ। Newsletter subscription UI is ready.")});
-  document.querySelector("#profileButton").onclick=()=>location.href="#login";
-  document.querySelector("#menuButton").onclick=()=>document.querySelector(".main-nav").classList.toggle("open-mobile");
-  document.querySelector("#notificationButton").onclick=()=>document.querySelector("#breaking-news")?.scrollIntoView({behavior:"smooth"});
+  document.querySelector("#newsletterForm")?.addEventListener("submit",e=>{e.preventDefault();const input=e.currentTarget.querySelector("input");if(input?.value){input.value="";alert("Newsletter form is ready; subscription storage will be connected when the newsletter table is enabled.")}});
+  document.querySelector("#profileButton")?.addEventListener("click",()=>location.href="#login");
+  document.querySelector("#menuButton")?.addEventListener("click",()=>document.querySelector(".main-nav")?.classList.toggle("open-mobile"));
+  document.querySelector("#notificationButton")?.addEventListener("click",()=>document.querySelector("#breakingTicker")?.scrollIntoView({behavior:"smooth",block:"center"}));
 }
 document.addEventListener("DOMContentLoaded",async()=>{languageSetup();const data=await loadData();searchSetup(data);misc()});
