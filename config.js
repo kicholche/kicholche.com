@@ -24,9 +24,9 @@ window.KICHOLOCHE_CONFIG = {
 
   /* ---------- Supabase ---------- */
 
-  SUPABASE_URL: "YOUR_SUPABASE_PROJECT_URL",
+  SUPABASE_URL: "https://pwjybkbwxvpdlwhwosqs.supabase.co",
 
-  SUPABASE_ANON_KEY: "YOUR_SUPABASE_ANON_KEY",
+  SUPABASE_ANON_KEY: "sb_publishable_KcTjG65BQZRr1PlPkUzHew_G7RquhdB",
 
   /* ---------- Features ---------- */
 
