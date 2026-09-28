@@ -125,6 +125,7 @@ function searchSetup(data){
   document.addEventListener("click",e=>{if(!form.contains(e.target))box.classList.remove("open")});
 }
 function misc(){
+  document.querySelector("#languageButton")?.addEventListener("click",()=>document.querySelector("#languageModal")?.classList.add("open"));
   document.querySelector("#newsletterForm")?.addEventListener("submit",e=>{e.preventDefault();const input=e.currentTarget.querySelector("input");if(input?.value){input.value="";alert("Newsletter form is ready; subscription storage will be connected when the newsletter table is enabled.")}});
   document.querySelector("#profileButton")?.addEventListener("click",()=>location.href="#login");
   document.querySelector("#menuButton")?.addEventListener("click",()=>document.querySelector(".main-nav")?.classList.toggle("open-mobile"));
