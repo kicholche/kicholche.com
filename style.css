@@ -45,13 +45,13 @@ a{text-decoration:none;color:inherit}button,input{font:inherit}button{cursor:poi
 /* ===== HERO + SIDE PANELS ===== */
 .hero-grid{display:grid;grid-template-columns:minmax(0,2.25fr) minmax(280px,.98fr) minmax(280px,.98fr);grid-template-rows:174px 75px;gap:9px}
 .hero{grid-row:1/3;position:relative;min-height:258px;border-radius:9px;overflow:hidden;background-image:linear-gradient(90deg,rgba(2,20,48,.9),rgba(2,20,48,.16)),url("https://commons.wikimedia.org/wiki/Special:FilePath/Darjeeling%2C%20India%2C%20Train%20of%20Darjeeling%20Himalayan%20Railway.jpg?width=1400");background-position:center;background-size:cover;box-shadow:var(--shadow)}
-.hero-copy{position:absolute;left:20px;bottom:18px;z-index:2;max-width:520px}.hero h1{margin:0;color:#fff;font-size:48px;line-height:1.05}.hero h1 em{font-style:normal;color:#ffd83d}
+.hero-copy{position:absolute;left:20px;bottom:18px;z-index:2;max-width:520px}.hero h1{margin:0;color:#fff;font-size:31px;line-height:1.05}.hero h1 em{font-style:normal;color:#ffd83d}
 .hero p{color:#f1f7ff;margin:9px 0 10px;font-size:14px;line-height:1.35}.primary-pill{display:inline-flex;align-items:center;gap:10px;padding:7px 18px;background:#fff;color:#163a61;border-radius:20px;font-weight:700}
 .hero-badge{position:absolute;right:22px;top:30px;color:#fff;text-align:center;transform:rotate(-8deg);font-size:15px;text-shadow:0 1px 4px #061c44}.hero-badge strong{font-size:17px}
 .hero-dots{position:absolute;right:20px;bottom:9px;display:flex;gap:5px}.hero-dots span{width:7px;height:7px;border-radius:50%;background:#dce8f7}.hero-dots .on{background:#fff;width:19px;border-radius:5px}
 .panel,.content-card{background:var(--card);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow)}
 .panel{padding:9px;overflow:hidden}.panel-title,.content-card header,.lottery-section header,.ai-section header{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.panel-title{margin-bottom:4px}.panel-title h2,.content-card h2,.lottery-section h2,.ai-section h2{margin:0;font-size:22px;line-height:1.15}
+.panel-title{margin-bottom:4px}.panel-title h2,.content-card h2,.lottery-section h2,.ai-section h2{margin:0;font-size:16px;line-height:1.15}
 .panel-title a,.content-card header a,.lottery-section header a,.ai-section header a{font-size:10px;color:var(--blue);white-space:nowrap}
 .compact-list{display:flex;flex-direction:column}.compact-item{display:grid;grid-template-columns:27px 1fr auto;align-items:center;gap:7px;padding:5px 0;border-top:1px solid #edf3f8;font-size:11px;min-height:29px}.compact-item:first-child{border-top:0}
 .item-icon{width:32px;height:32px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:12px;background:var(--green)}
@@ -64,7 +64,7 @@ a{text-decoration:none;color:inherit}button,input{font:inherit}button{cursor:poi
 .category{height:136px;border:1px solid var(--line);border-radius:9px;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9px;transition:transform .18s,box-shadow .18s}
 .category:hover{transform:translateY(-2px);box-shadow:0 7px 20px rgba(18,65,105,.13)}
 .category i{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;color:#fff;font-size:21px;margin-bottom:8px}.category strong{font-size:15px}.category small{font-size:9px;color:#7187a0;line-height:1.25;margin-top:3px}
-.category.red i{background:var(--red)}.category.blue i{background:#0b8fe8}.category.green i{background:var(--green)}.category.purple i{background:var(--purple)}.category.orange i{background:var(--orange)}.category.cyan i{background:var(--cyan)}
+.category.red{background:#fff1f3}.category.blue{background:#eef8ff}.category.green{background:#effaf2}.category.purple{background:#f8f0ff}.category.orange{background:#fff7e8}.category.cyan{background:#eefbfb}.category.red i{background:var(--red)}.category.blue i{background:#0b8fe8}.category.green i{background:var(--green)}.category.purple i{background:var(--purple)}.category.orange i{background:var(--orange)}.category.cyan i{background:var(--cyan)}
 
 /* ===== CONTENT DASHBOARD ===== */
 .dashboard-grid{display:grid;grid-template-columns:minmax(0,3.65fr) minmax(260px,1.55fr);gap:9px;margin-top:10px}.four-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -119,4 +119,4 @@ a{text-decoration:none;color:inherit}button,input{font:inherit}button{cursor:poi
 .empty-state{display:block!important;grid-template-columns:none!important;padding:16px 8px!important;text-align:center;color:var(--muted);font-size:11px!important}.empty-state:before{display:none!important}
 
 .language-switcher{position:relative}.main-nav.open-mobile{max-height:420px}.main-nav.open-mobile .nav-row{height:auto;flex-wrap:wrap;overflow:visible;padding-block:7px}.main-nav.open-mobile .nav-row a{height:38px}.hero h1{font-weight:700}
-@media(max-width:560px){.hero h1{font-size:34px}}
+
