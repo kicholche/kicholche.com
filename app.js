@@ -1,49 +1,6 @@
 const K=window.KICHOLOCHE_CONFIG;
 const fallback={
-  government:[
-    {title:"সরকারি নতুন আপডেট",date:"12 Apr, 2025",tag:"নতুন"},
-    {title:"সরকারি প্রকল্প ও সুবিধার নতুন ঘোষণা",date:"10 Apr, 2025",tag:"নতুন"},
-    {title:"নতুন আবেদন ও বিজ্ঞপ্তি প্রকাশ",date:"08 Apr, 2025",tag:"নতুন"},
-    {title:"নিয়োগ বিজ্ঞপ্তি ও সরকারি চাকরির আপডেট",date:"06 Apr, 2025",tag:"চলমান"},
-    {title:"পরীক্ষা ও ফলাফলের গুরুত্বপূর্ণ আপডেট",date:"05 Apr, 2025",tag:"জানুন"}
-  ],
-  jobs:[
-    {title:"WBPSC Group C ও D",date:"12 Apr, 2025",tag:"পশ্চিমবঙ্গ"},
-    {title:"IB — বিভিন্ন পদে নিয়োগ",date:"10 Apr, 2025",tag:"কেন্দ্রীয়"},
-    {title:"বিভিন্ন সরকারি ও বেসরকারি চাকরি",date:"08 Apr, 2025",tag:"চলমান"},
-    {title:"Banking — বিভিন্ন পদে নিয়োগ",date:"06 Apr, 2025",tag:"চলমান"},
-    {title:"RPF Constable",date:"03 Apr, 2025",tag:"রেলওয়ে"}
-  ],
-  scholarships:[
-    {title:"পশ্চিমবঙ্গ স্কলারশিপ 2025",date:"12 Apr, 2025",tag:"পশ্চিমবঙ্গ"},
-    {title:"OBC Scholarship 2025",date:"10 Apr, 2025",tag:"পশ্চিমবঙ্গ"},
-    {title:"SC/ST Scholarship 2025",date:"08 Apr, 2025",tag:"পশ্চিমবঙ্গ"},
-    {title:"NSP Scholarship 2025",date:"06 Apr, 2025",tag:"কেন্দ্রীয়"},
-    {title:"Post Matric Scholarship",date:"03 Apr, 2025",tag:"পশ্চিমবঙ্গ"}
-  ],
-  results:[
-    {title:"মাধ্যমিক পরীক্ষা রেজাল্ট",date:"12 Apr, 2025",tag:"WB"},
-    {title:"উচ্চমাধ্যমিক রেজাল্ট 2025",date:"10 Apr, 2025",tag:"WB"},
-    {title:"WBJEE 2025",date:"08 Apr, 2025",tag:"WB"},
-    {title:"ICSE রেজাল্ট 2025",date:"06 Apr, 2025",tag:"ICSE"},
-    {title:"NEET 2025",date:"03 Apr, 2025",tag:"কেন্দ্রীয়"}
-  ],
-  forms:[
-    {title:"WBPSC Group C ও D",date:"12 Apr, 2025"},
-    {title:"ICDS সুপারভাইজার",date:"10 Apr, 2025"},
-    {title:"RPF কনস্টেবল",date:"08 Apr, 2025"},
-    {title:"SSC CGL",date:"05 Apr, 2025"},
-    {title:"পশ্চিমবঙ্গ স্কলারশিপ",date:"01 Apr, 2025"}
-  ],
-  schemes:[
-    {title:"PM Kisan সম্মান নিধি",date:"12 Apr, 2025"},
-    {title:"লক্ষ্মী ভাণ্ডার প্রকল্প",date:"10 Apr, 2025"},
-    {title:"অন্নপূর্ণা ভাণ্ডার",date:"08 Apr, 2025"},
-    {title:"কন্যাশ্রী প্রকল্প",date:"06 Apr, 2025"}
-  ],
-  lottery:["West Bengal Lottery Result","Nagaland State Lottery Result","Sikkim State Lottery Result","Dear Lottery Result"],
-  ai:["Resume Builder","Image Generator","Content Writer","PDF Tools","Grammar Helper","Code Assistant","Resume Formatter","Prompt Builder"],
-  breaking:["সরকারি পরীক্ষার নতুন ফলাফল প্রকাশ","নতুন নিয়োগ বিজ্ঞপ্তি প্রকাশ — আবেদন শুরু","সরকারি প্রকল্পের নতুন তালিকা প্রকাশ"]
+  government:[],jobs:[],scholarships:[],results:[],forms:[],schemes:[],lottery:[],ai:[],breaking:[]
 };
 const icons=["fa-leaf","fa-building-columns","fa-file-lines","fa-graduation-cap","fa-award"];
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
@@ -72,15 +29,18 @@ function itemLink(x,inner){
   return url!=="#" ? '<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+inner+'</a>' : inner;
 }
 function listHTML(items){
+  if(!items.length)return '<li class="empty-state">এখনও কোনো তথ্য প্রকাশিত হয়নি</li>';
   return items.slice(0,5).map((x,i)=>itemLink(x,'<span class="item-icon"><i class="fa-solid '+icons[i%icons.length]+'"></i></span><span>'+esc(x.title)+'</span><small>'+esc(x.date||"")+'</small>')).map(x=>"<li>"+x+"</li>").join("");
 }
 function compactHTML(items){
+  if(!items.length)return '<div class="compact-item empty-state">এখনও কোনো তথ্য প্রকাশিত হয়নি</div>';
   return items.slice(0,5).map((x,i)=>{
     const inner='<span class="item-icon"><i class="fa-solid '+icons[i%icons.length]+'"></i></span><span>'+esc(x.title)+'</span><b class="status '+(String(x.tag).toLowerCase().includes("new")||String(x.tag).includes("নতুন")?"new":"")+'">'+esc(x.tag||"চলমান")+'</b>';
     return '<div class="compact-item">'+itemLink(x,inner)+'</div>';
   }).join("");
 }
 function formHTML(items){
+  if(!items.length)return '<div class="compact-item empty-state">এখনও কোনো ফর্ম প্রকাশিত হয়নি</div>';
   return items.slice(0,5).map(x=>{
     const action=x.url?safeUrl(x.url):"#";
     return '<div class="compact-item"><span class="item-icon"><i class="fa-solid fa-file-circle-check"></i></span><span>'+esc(x.title)+'<small class="block">'+esc(x.date||"")+'</small></span>'+(action!=="#"?'<a class="status" href="'+esc(action)+'" target="_blank" rel="noopener noreferrer">আবেদন করুন</a>':'<span class="status">আবেদন করুন</span>')+'</div>';
