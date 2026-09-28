@@ -89,22 +89,22 @@ function createRestClient(){
     const session=getSession();
     const headers={"apikey":apiKey,"Content-Type":"application/json",...(options.headers||{})};
     if(session?.access_token)headers.Authorization="Bearer "+session.access_token;
-    const res=await fetch(base+path,{...options,headers});
-    const text=await res.text();
-    let data=null; try{data=text?JSON.parse(text):null}catch(e){data=text}
+    const res=await fetch(base+path,{...options,headers,cache:"no-store"});
+    const raw=await res.text();
+    let data=null; try{data=raw?JSON.parse(raw):null}catch(e){data=raw}
     if(!res.ok)return {data:null,error:{message:data?.message||data?.error_description||data?.hint||String(data||("HTTP "+res.status)),status:res.status}};
     return {data,error:null};
   }
 
   function query(table){
-    let params=new URLSearchParams();
-    let method="GET", body=null, filters=[];
+    const params=new URLSearchParams();
+    let method="GET",body=null,filters=[],single=false;
     const api={
       select(columns="*"){params.set("select",columns);return api},
       order(column,opts={}){params.set("order",column+"."+(opts.ascending===false?"desc":"asc"));return api},
       limit(n){params.set("limit",String(n));return api},
       eq(column,value){filters.push([column,value]);return api},
-      maybeSingle(){api._single=true;return api},
+      maybeSingle(){single=true;return api},
       insert(payload){method="POST";body=payload;return api},
       update(payload){method="PATCH";body=payload;return api},
       delete(){method="DELETE";return api},
@@ -113,14 +113,14 @@ function createRestClient(){
           try{
             const qs=new URLSearchParams(params);
             filters.forEach(([k,v])=>qs.set(k,"eq."+String(v)));
-            if(method==="POST"||method==="PATCH")params.set("select","*");
+            if(method==="POST"||method==="PATCH")qs.set("select","*");
             const out=await request("/rest/v1/"+encodeURIComponent(table)+(qs.toString()?"?"+qs:""),{
               method,body:body==null?undefined:JSON.stringify(body),
-              headers:method==="POST"?{"Prefer":"return=representation"}:method==="PATCH"?{"Prefer":"return=representation"}:{}
+              headers:method==="POST"||method==="PATCH"?{"Prefer":"return=representation"}:{}
             });
             if(out.error)return {data:null,error:out.error};
             let data=out.data;
-            if(api._single)data=Array.isArray(data)?(data[0]||null):data;
+            if(single)data=Array.isArray(data)?(data[0]||null):data;
             return {data,error:null};
           }catch(e){return {data:null,error:{message:e?.message||"Request failed"}}}
         })().then(resolve,reject);
@@ -132,14 +132,17 @@ function createRestClient(){
   return {
     auth:{
       async signInWithPassword({email,password}){
-        const res=await fetch(base+"/auth/v1/token?grant_type=password",{
-          method:"POST",
-          headers:{"apikey":apiKey,"Content-Type":"application/json"},
-          body:JSON.stringify({email,password})
-        });
-        const data=await res.json().catch(()=>null);
-        if(!res.ok)return {data:null,error:{message:data?.msg||data?.error_description||data?.message||"Invalid login credentials."}};
-        setSession(data); return {data,error:null};
+        try{
+          const res=await fetch(base+"/auth/v1/token?grant_type=password",{
+            method:"POST",
+            headers:{"apikey":apiKey,"Content-Type":"application/json"},
+            body:JSON.stringify({email,password}),
+            cache:"no-store"
+          });
+          const data=await res.json().catch(()=>null);
+          if(!res.ok)return {data:null,error:{message:data?.msg||data?.error_description||data?.message||"Invalid login credentials."}};
+          setSession(data); return {data,error:null};
+        }catch(e){return {data:null,error:{message:"Could not connect to Supabase: "+(e?.message||"network error")}}}
       },
       async getSession(){return {data:{session:getSession()},error:null}},
       async signOut(){setSession(null);return {error:null}}
@@ -150,8 +153,8 @@ function createRestClient(){
 
 async function ensureSupabase(){
   if(sb)return sb;
-  if(!window.KICHOLOCHE_CONFIG?.SUPABASE_URL||!window.KICHOLOCHE_CONFIG?.SUPABASE_ANON_KEY)
-    throw new Error("Supabase configuration is missing.");
+  const cfg=window.KICHOLOCHE_CONFIG||{};
+  if(!cfg.SUPABASE_URL||!cfg.SUPABASE_ANON_KEY)throw new Error("Supabase configuration is missing.");
   sb=createRestClient();
   return sb;
 }
